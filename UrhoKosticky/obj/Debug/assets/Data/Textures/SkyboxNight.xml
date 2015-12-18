@@ -1,0 +1,8 @@
+<cubemap>
+    <face name="stars_right.dds" />
+    <face name="stars_left.dds" />
+    <face name="stars_top.dds" />
+    <face name="BrightDay1_NegY.dds" />
+    <face name="stars_front.dds" />
+    <face name="stars_back.dds" />
+</cubemap>

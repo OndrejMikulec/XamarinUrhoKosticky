@@ -1,0 +1,40 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Urho.Droid</name>
+    </assembly>
+    <members>
+        <member name="T:Urho.Droid.UrhoSurface">
+            <summary>
+            A controller that provides a SDLSurface that can be used in any activity.
+            Make sure you handle these events in your Activity:
+            - OnResume
+            - OnPause
+            - OnLowMemory
+            - OnDestroy
+            - DispatchKeyEvent
+            - OnWindowFocusChanged
+            </summary>
+        </member>
+        <member name="M:Urho.Droid.UrhoSurface.CreateSurface``1(Android.App.Activity)">
+            <summary>
+            Creates a view (SurfaceView) that can be added anywhere
+            </summary>
+        </member>
+        <member name="M:Urho.Droid.UrhoSurface.CreateSurface(Android.App.Activity,System.Type)">
+            <summary>
+            Creates a view (SurfaceView) that can be added anywhere
+            </summary>
+        </member>
+        <member name="M:Urho.Droid.UrhoSurface.RunInActivity``1">
+            <summary>
+            The simpliest way to launch a game. It opens a special full-screen activity
+            </summary>
+        </member>
+        <member name="M:Urho.Droid.UrhoSurface.RunInActivity(System.Type)">
+            <summary>
+            The simpliest way to launch a game. It opens a special full-screen activity
+            </summary>
+        </member>
+    </members>
+</doc>

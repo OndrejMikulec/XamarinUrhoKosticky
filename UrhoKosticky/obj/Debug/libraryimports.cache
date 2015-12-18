@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Paths>
+  <ManifestDocuments>
+    <ManifestDocument>obj\Debug\__library_projects__\Urho.Droid.SdlBindings\library_project_imports\AndroidManifest.xml</ManifestDocument>
+    <ManifestDocument>obj\Debug\__library_projects__\Urho.Droid.SdlBindings\library_project_imports\aapt\AndroidManifest.xml</ManifestDocument>
+  </ManifestDocuments>
+  <NativeLibraries>
+    <NativeLibrary>obj\Debug\__library_projects__\Urho.Droid.SdlBindings\library_project_imports\jni\x86\lib04_StaticScene.so</NativeLibrary>
+  </NativeLibraries>
+  <Jars>
+    <Jar>obj\Debug\__library_projects__\Urho.Droid.SdlBindings\library_project_imports\bin\classes.jar</Jar>
+  </Jars>
+</Paths>
