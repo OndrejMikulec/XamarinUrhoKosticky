@@ -32,8 +32,13 @@ namespace UrhoKosticky
 		bool nabito = true;
 
 		List<Node> boxesNodesList = new List<Node> ();
+		List<Node> ballNodesList = new List<Node> ();
 
-	
+		bool final = false;
+
+		Vector3 cameraStartPosition = new Vector3 (0.0f, 5.0f, -20.0f);
+
+
 		protected override void Start()
 		{
 			
@@ -63,7 +68,16 @@ Rozbi zed.");
 			base.OnUpdate(timeStep);
 			SimpleMoveCamera3D(timeStep);
 			MoveCameraByTouches(timeStep);
-			destroyStateCheck ();
+			if (!final) {
+
+				destroyStateCheck ();				
+			} else if (final && !waitAfterGarbageElapsed){
+				endAction ();
+			} else if (final && waitAfterGarbageElapsed) {
+				moveCameraToFinal (cameraStartPosition,0,0);
+			}
+
+			//moveCameraToFinal (new Vector3(0,20,-100),10,-10);
 
 		}
 
@@ -239,107 +253,22 @@ Rozbi zed.");
 			}
 
 
-			List<int[]> boxes2 = new List<int[]> (){
-				new int[] {1,1,0},
-				new int[] {2,1,0},
-				new int[] {1,2,0},
-				new int[] {1,3,0},
-				new int[] {2,3,0},
-				new int[] {2,4,0},
-				new int[] {2,5,0},
-				new int[] {1,5,0},
-
-				new int[] {1,1,1},
-				new int[] {2,1,1},
-				new int[] {1,2,1},
-				new int[] {1,3,1},
-				new int[] {2,3,1},
-				new int[] {2,4,1},
-				new int[] {2,5,1},
-				new int[] {1,5,1}
-			};
-
-			List<int[]> boxes0 = new List<int[]> (){
-				new int[] {4,1,0},
-				new int[] {5,1,0},
-				new int[] {6,1,0},
-				new int[] {4,2,0},
-				new int[] {6,2,0},
-				new int[] {4,3,0},
-				new int[] {6,3,0},
-				new int[] {4,4,0},
-				new int[] {6,4,0},
-				new int[] {4,5,0},
-				new int[] {5,5,0},
-				new int[] {6,5,0},
-
-				new int[] {4,1,1},
-				new int[] {5,1,1},
-				new int[] {6,1,1},
-				new int[] {4,2,1},
-				new int[] {6,2,1},
-				new int[] {4,3,1},
-				new int[] {6,3,1},
-				new int[] {4,4,1},
-				new int[] {6,4,1},
-				new int[] {4,5,1},
-				new int[] {5,5,1},
-				new int[] {6,5,1},
-			};
-
-			List<int[]> boxes1 = new List<int[]> (){
-				new int[] {8,1,0},
-				new int[] {8,2,0},
-				new int[] {8,3,0},
-				new int[] {8,4,0},
-				new int[] {8,5,0},
-
-				new int[] {8,1,1},
-				new int[] {8,2,1},
-				new int[] {8,3,1},
-				new int[] {8,4,1},
-				new int[] {8,5,1},
-			};
-
-			List<int[]> boxes5 = new List<int[]> (){
-				new int[] {10,1,0},
-				new int[] {11,1,0},
-				new int[] {11,2,0},
-				new int[] {11,3,0},
-				new int[] {10,3,0},
-				new int[] {10,4,0},
-				new int[] {10,5,0},
-				new int[] {11,5,0},
-
-				new int[] {10,1,1},
-				new int[] {11,1,1},
-				new int[] {11,2,1},
-				new int[] {11,3,1},
-				new int[] {10,3,1},
-				new int[] {10,4,1},
-				new int[] {10,5,1},
-				new int[] {11,5,1}
-
-
-			};
-
-
-			for (int x = 0; x <= 12; x++) {
+			for (int x = 0; x <= 14; x++) {
 				for (int z = 0; z <= 0; z++) {
-					for (int y = 0; y <= 6; y++) {
+					for (int y = 0; y <= 7; y++) {
 						Node boxNode = scene.CreateChild("Box");
 						boxNode.Position=new Vector3((float)x+0.3f-6f,(float)y+0.3f,(float)z+0.3f);
 						StaticModel boxObject = boxNode.CreateComponent<StaticModel>();
 						boxObject.Model=cache.GetModel("Models/Box.mdl");
 
-						if (vectorsListContains(boxes2,new int[]{x,y,z})) {
+						if (vectorsListContains(boxText.boxes2(1,2),new int[]{x,y,z})) {
 							boxObject.SetMaterial (cache.GetMaterial ("Materials/M_0020_Red.xml"));
 						} 
-						else if (vectorsListContains(boxes0,new int[]{x,y,z})) {
+						else if (vectorsListContains(boxText.boxes0(5,2),new int[]{x,y,z})) {
 							boxObject.SetMaterial (cache.GetMaterial ("Materials/M_0060_GrassGreen.xml"));
-						} else if (vectorsListContains(boxes1,new int[]{x,y,z})) {
+						} else if (vectorsListContains(boxText.boxes1(9,2),new int[]{x,y,z})) {
 							boxObject.SetMaterial (cache.GetMaterial ("Materials/M_0056_Yellow.xml"));
-						} else if (vectorsListContains(boxes5,new int[]{x,y,z})) {
+						} else if (vectorsListContains(boxText.boxes5(11,2),new int[]{x,y,z})) {
 							boxObject.SetMaterial (cache.GetMaterial ("Materials/M_0103_Blue.xml"));
 						} else {
 							boxObject.SetMaterial (cache.GetMaterial ("Materials/M_0132_LightGray.xml"));
@@ -364,8 +293,7 @@ Rozbi zed.");
 			Camera oCamera = CameraNode.CreateComponent<Camera>();
 			oCamera.FarClip = 500.0f;
 
-
-			CameraNode.Position = (new Vector3(0.0f, 5.0f, -20.0f));
+			CameraNode.Position = cameraStartPosition;
 
 		}
 
@@ -392,6 +320,8 @@ Rozbi zed.");
 			const float objectVelocity = 40.0f;
 
 			body.SetLinearVelocity(CameraNode.Rotation * new Vector3(0f, 0.25f, 1f) * objectVelocity);
+
+			ballNodesList.Add (boxNode);
 		}
 
 		bool vectorsComparer(int[] vec1, int[] vec2)
@@ -418,24 +348,154 @@ Rozbi zed.");
 
 			bool returnBool = true;
 			int count = 0;
-			foreach (var item in boxesNodesList) {
-				if (item.Position.Y>1) {
+			foreach (Node item in boxesNodesList) {
+				if (item.Position.Y>2) {
 					count++;
 					returnBool = false;
 
 				} else {
-					StringHash oStringHash = new StringHash (121334427);
-					StaticModel oRigidBody = (StaticModel)item.GetComponent (oStringHash, false);
-					oRigidBody.SetMaterial(cache.GetMaterial("Materials/M_0039_DarkOrange.xml"));					
+					//StringHash oStringHash = new StringHash (StaticModel.TypeStatic.Code);
+					//StaticModel oStaticModel = (StaticModel)item.GetComponent (oStringHash, false);
+					//oStaticModel.SetMaterial(cache.GetMaterial("Materials/M_0039_DarkOrange.xml"));
+					item.GetComponent<StaticModel> ().SetMaterial(cache.GetMaterial("Materials/M_0039_DarkOrange.xml"));
 				}
 			}
-			textboxesCount.Value =  (@"Zbývá zbořit"
-+count+" kostiček.");
+			textboxesCount.Value =  ("Zbývá zbořit"+Environment.NewLine+count+" kostiček.");
+
+			if (count==0) {
+				final = true;
+			}
 
 			return returnBool;
 		}
 
+		bool garbageMoved = false;
+		bool timerStarted = false;
+		Timer waitAfterGarbage = new Timer(2000);
+		bool waitAfterGarbageElapsed = false;
+		void endAction()
+		{
 
+
+			if (!garbageMoved) {
+				garbageMoved = true;
+				Random dir = new Random ();
+
+				foreach (Node item in boxesNodesList) {
+					endMove (item,dir);
+				}
+
+				foreach (Node item in ballNodesList) {
+					endMove (item,dir);
+				}				
+			}
+
+			if (!timerStarted) {
+				timerStarted = true;
+				waitAfterGarbage.Elapsed += delegate {
+					waitAfterGarbageElapsed = true;
+				};
+				waitAfterGarbage.Start ();
+			}
+
+
+		}
+
+		void endMove(Node item,Random dir )
+		{
+			StringHash oStringHash = new StringHash (RigidBody.TypeStatic.Code);
+
+			RigidBody oRigidBody = (RigidBody)item.GetComponent (oStringHash, false);
+
+
+			float dirX = ((float)dir.Next (-1000, 1000))/ 1000;
+			float dirY = ((float)dir.Next (0, 1000)) / 1000;
+			float dirZ = ((float)dir.Next (-1000, 1000)) / 1000;
+
+			item.GetComponent<RigidBody> ().SetLinearVelocity (new Vector3(dirX,dirY,dirZ)*50);
+			//oRigidBody.SetLinearVelocity (new Vector3(dirX,dirY,dirZ)*50);
+		}
+
+		bool getPitchedteSteps = false;
+		bool getYawedteSteps = false;
+		bool getMoveSteps = false;
+
+		bool movedInPosition = false;
+		bool yawedInPosition = false;
+		bool pitchedInPosition = false;
+
+		float stepX = 0;
+		float stepY = 0;
+		float stepZ = 0;
+
+		float stepYaw = 0;
+		float stepPitch = 0;
+
+		void moveCameraToFinal(Vector3 targetPosition,float targetPitch = 0, float targetYaw = 0)
+		{
+
+			if (!pitchedInPosition) {
+				if (!getPitchedteSteps) {
+					getPitchedteSteps = true;
+
+					stepPitch = ( targetPitch - CameraNode.Rotation.PitchAngle )/10; 
+				}
+
+				if (Math.Round(CameraNode.Rotation.PitchAngle,1)!=Math.Round(targetPitch,1)	) {
+					Pitch += stepPitch;
+
+					CameraNode.Rotation = new Quaternion (Pitch,0,0);
+
+				} else {
+					pitchedInPosition = true;
+				}				
+			}
+
+			if (pitchedInPosition&&!yawedInPosition) {
+				if (!getYawedteSteps) {
+					getYawedteSteps = true;
+
+					stepYaw = ( CameraNode.Rotation.YawAngle -targetYaw)/10; 
+
+				}
+
+				if (	Math.Round(CameraNode.Rotation.YawAngle,1)!=Math.Round(targetYaw,1)	) {
+					Yaw += stepYaw;
+
+					CameraNode.Rotation = new Quaternion (0,Yaw,0);
+
+				} else {
+					yawedInPosition = true;
+				}				
+			}
+
+			if (yawedInPosition&&!movedInPosition) {
+				if (!getMoveSteps) {
+					getMoveSteps = true;
+					stepX = ( targetPosition.X - CameraNode.Position.X)/100; 
+					stepY = ( targetPosition.Y - CameraNode.Position.Y)/100; 
+					stepZ = ( targetPosition.Z - CameraNode.Position.Z)/100; 
+
+				}
+
+				if (	Math.Round(targetPosition.X,1)!=Math.Round( CameraNode.Position.X,1)
+					|| 	Math.Round(targetPosition.Y,1)!=Math.Round( CameraNode.Position.Y,1)
+					|| 	Math.Round(targetPosition.Z,1)!=Math.Round( CameraNode.Position.Z,1)
+				) {
+
+				float cameraPositionX = CameraNode.Position.X + stepX;
+					float cameraPositionY = CameraNode.Position.Y + stepY;
+					float cameraPositionZ = CameraNode.Position.Z + stepZ;
+
+				CameraNode.Position = new Vector3(cameraPositionX,cameraPositionY,cameraPositionZ);
+				} else {
+					movedInPosition = true;
+				}			
+			}
+
+
+
+		}
 
 	}
 }

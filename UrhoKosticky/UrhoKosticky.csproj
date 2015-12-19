@@ -67,6 +67,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Kosticky.cs" />
     <Compile Include="KostickyActivity.cs" />
+    <Compile Include="boxText.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\AboutResources.txt" />

@@ -11,6 +11,7 @@ C:\Users\Ondra\Documents\Projects\UrhoKosticky\UrhoKosticky\bin\Debug\Xamarin.An
 C:\Users\Ondra\Documents\Projects\UrhoKosticky\UrhoKosticky\bin\Debug\Urho.xml
 C:\Users\Ondra\Documents\Projects\UrhoKosticky\UrhoKosticky\bin\Debug\Urho.Droid.xml
 C:\Users\Ondra\Documents\Projects\UrhoKosticky\UrhoKosticky\bin\Debug\Urho.Droid.SdlBindings.xml
+C:\Users\Ondra\Documents\Projects\UrhoKosticky\UrhoKosticky\obj\Debug\UrhoKosticky.csprojResolveAssemblyReference.cache
 C:\Users\Ondra\Documents\Projects\UrhoKosticky\UrhoKosticky\obj\Debug\UrhoKosticky.dll
 C:\Users\Ondra\Documents\Projects\UrhoKosticky\UrhoKosticky\obj\Debug\UrhoKosticky.pdb
 C:\Users\Ondra\Documents\Projects\UrhoKosticky\UrhoKosticky\obj\Debug\android\bin\com.ondrejmikulec.urhokosticky.apk
@@ -23,4 +24,3 @@ C:\Users\Ondra\Documents\Projects\UrhoKosticky\UrhoKosticky\obj\Debug\res\mipmap
 C:\Users\Ondra\Documents\Projects\UrhoKosticky\UrhoKosticky\obj\Debug\res\mipmap-xxxhdpi\icon.png
 C:\Users\Ondra\Documents\Projects\UrhoKosticky\UrhoKosticky\obj\Debug\R.cs.flag
 C:\Users\Ondra\Documents\Projects\UrhoKosticky\UrhoKosticky\obj\Debug\uploadflags.txt
-C:\Users\Ondra\Documents\Projects\UrhoKosticky\UrhoKosticky\obj\Debug\UrhoKosticky.csprojResolveAssemblyReference.cache
