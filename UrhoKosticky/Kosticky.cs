@@ -34,13 +34,32 @@ namespace UrhoKosticky
 		List<Node> boxesNodesList = new List<Node> ();
 		List<Node> ballNodesList = new List<Node> ();
 
-		bool final = false;
-
 		Vector3 cameraStartPosition = new Vector3 (0.0f, 5.0f, -20.0f);
 
 
+		//0=idle
+		int gameStateNow = 1;
+
+		List<int> gameStatesForNewBoxesBuilded;
+		List<int> gameStatesForNewBoxes(int startState, int rate, int max) 
+		{
+			List<int> returnList = new List<int> ();
+			int rateCount = rate;
+			for (int i = startState; i < max*rate; i++) {
+				if (rateCount==rate) {
+					returnList.Add (i);
+					rateCount = 0;
+				}
+				rateCount++;
+			}
+			return returnList;
+
+		}
+
 		protected override void Start()
 		{
+			gameStatesForNewBoxesBuilded = gameStatesForNewBoxes(7, 10, 20) ;
+
 			
 			Graphics.SetWindowIcon(ResourceCache.GetImage ("Textures/UrhoIcon.png"));
 			Graphics.WindowTitle = "PF 2016";
@@ -54,8 +73,7 @@ namespace UrhoKosticky
 			CreateScene();
 			SetupViewport();
 
-			initInstructionsText (@"Ahoj
-Rozbi zed.");
+			initInstructionsText ("Ahoj"+Environment.NewLine+"Rozbi zed.");
 			initBoxesCountText ("Zbývá "+boxesNodesList.Count+" kostiček.");
 
 			initControls ();
@@ -68,16 +86,34 @@ Rozbi zed.");
 			base.OnUpdate(timeStep);
 			SimpleMoveCamera3D(timeStep);
 			MoveCameraByTouches(timeStep);
-			if (!final) {
 
-				destroyStateCheck ();				
-			} else if (final && !waitAfterGarbageElapsed){
-				endAction ();
-			} else if (final && waitAfterGarbageElapsed) {
-				moveCameraToFinal (cameraStartPosition,0,0);
+			if (gameStateNow == 1) {
+				destroyStateCheck ();
+
+			} else if (gameStateNow == 2){
+				waitAndSetGameAction (3, 2000);
+
+			} else if (gameStateNow == 3) {
+				endCleanGarbageAction ();
+				gameStateNow = 4;
+
+			} else if (gameStateNow == 4){
+				moveCameraToFinal (cameraStartPosition,0,0,5);
+
+			}  else if (gameStateNow == 5){
+				waitAndSetGameAction (6, 2000);
+
+			} else if (gameStateNow == 6){
+				endCleanGarbageAction ();
+				boxesNodesList.Clear ();
+				gameStateNow = gameStatesForNewBoxesBuilded[0];
+			} else if (gameStateNow >= gameStatesForNewBoxesBuilded[0] && gameStateNow <= gameStatesForNewBoxesBuilded[gameStatesForNewBoxesBuilded.Count-1]){
+				if (gameStatesForNewBoxesBuilded.Contains (gameStateNow)) {
+					createBoxes ();
+				}
+				gameStateNow++;
 			}
 
-			//moveCameraToFinal (new Vector3(0,20,-100),10,-10);
 
 		}
 
@@ -256,38 +292,19 @@ Rozbi zed.");
 			for (int x = 0; x <= 14; x++) {
 				for (int z = 0; z <= 0; z++) {
 					for (int y = 0; y <= 7; y++) {
-						Node boxNode = scene.CreateChild("Box");
-						boxNode.Position=new Vector3((float)x+0.3f-6f,(float)y+0.3f,(float)z+0.3f);
-						StaticModel boxObject = boxNode.CreateComponent<StaticModel>();
-						boxObject.Model=cache.GetModel("Models/Box.mdl");
 
-						if (vectorsListContains(boxText.boxes2(1,2),new int[]{x,y,z})) {
-							boxObject.SetMaterial (cache.GetMaterial ("Materials/M_0020_Red.xml"));
-						} 
-						else if (vectorsListContains(boxText.boxes0(5,2),new int[]{x,y,z})) {
-							boxObject.SetMaterial (cache.GetMaterial ("Materials/M_0060_GrassGreen.xml"));
-						} else if (vectorsListContains(boxText.boxes1(9,2),new int[]{x,y,z})) {
-							boxObject.SetMaterial (cache.GetMaterial ("Materials/M_0056_Yellow.xml"));
-						} else if (vectorsListContains(boxText.boxes5(11,2),new int[]{x,y,z})) {
-							boxObject.SetMaterial (cache.GetMaterial ("Materials/M_0103_Blue.xml"));
-						} else {
-							boxObject.SetMaterial (cache.GetMaterial ("Materials/M_0132_LightGray.xml"));
-						}
-
-						boxObject.CastShadows = true;
-
-						RigidBody body = boxNode.CreateComponent<RigidBody>();
-						body.Mass=1f;
-						body.Friction=1f;
-						CollisionShape shape = boxNode.CreateComponent<CollisionShape>();
-						shape.SetBox(Vector3.One, Vector3.Zero, Quaternion.Identity);
-
-						boxesNodesList.Add (boxNode);
-
+						createBoxAndAddToList (
+							new Vector3 ((float)x + 0.3f - 6f, (float)y + 0.3f, (float)z + 0.3f), 
+							boxesNodesList
+						);
 					}
 				}
 			}
 
+			colorBoxesByColorSchema (boxesNodesList, BoxColorSchemas.boxes2 (-5, 2), cache.GetMaterial ("Materials/M_0020_Red.xml"));
+			colorBoxesByColorSchema (boxesNodesList, BoxColorSchemas.boxes0 (-1, 2), cache.GetMaterial ("Materials/M_0060_GrassGreen.xml"));
+			colorBoxesByColorSchema (boxesNodesList, BoxColorSchemas.boxes1 (3, 2), cache.GetMaterial ("Materials/M_0056_Yellow.xml"));
+			colorBoxesByColorSchema (boxesNodesList, BoxColorSchemas.boxes5 (5, 2), cache.GetMaterial ("Materials/M_0103_Blue.xml"));
 
 			CameraNode = new Node();
 			Camera oCamera = CameraNode.CreateComponent<Camera>();
@@ -296,6 +313,40 @@ Rozbi zed.");
 			CameraNode.Position = cameraStartPosition;
 
 		}
+
+		public void createBoxAndAddToList(Vector3 position, List<Node> listToAdd)
+		{
+			var cache = ResourceCache;
+			Node boxNode = scene.CreateChild("Box");
+			boxNode.Position = position;
+			StaticModel boxObject = boxNode.CreateComponent<StaticModel>();
+			boxObject.Model=cache.GetModel("Models/Box.mdl");
+			boxObject.SetMaterial (cache.GetMaterial ("Materials/M_0132_LightGray.xml"));
+			boxObject.CastShadows = true;
+			RigidBody body = boxNode.CreateComponent<RigidBody>();
+			body.Mass=1f;
+			body.Friction=1f;
+			CollisionShape shape = boxNode.CreateComponent<CollisionShape>();
+			shape.SetBox(Vector3.One, Vector3.Zero, Quaternion.Identity);
+
+			listToAdd.Add (boxNode);
+		}
+
+		void colorBoxesByColorSchema(List<Node> boxesListToColor, List<int[]> schema, Material mat)
+		{
+			foreach (Node item in boxesListToColor) {
+				int[] roundedPosition = new int[] {
+					(int)Math.Round (item.Position.X),
+					(int)Math.Round (item.Position.Y),
+					(int)Math.Round (item.Position.Z)
+				};
+				if (vectorsListContains(schema,roundedPosition)) {
+					StaticModel boxObject = item.GetComponent<StaticModel> ();
+					boxObject.SetMaterial (mat);					
+				}
+			}
+		}
+
 
 		void SpawnObject()
 		{
@@ -354,51 +405,42 @@ Rozbi zed.");
 					returnBool = false;
 
 				} else {
-					//StringHash oStringHash = new StringHash (StaticModel.TypeStatic.Code);
-					//StaticModel oStaticModel = (StaticModel)item.GetComponent (oStringHash, false);
-					//oStaticModel.SetMaterial(cache.GetMaterial("Materials/M_0039_DarkOrange.xml"));
 					item.GetComponent<StaticModel> ().SetMaterial(cache.GetMaterial("Materials/M_0039_DarkOrange.xml"));
 				}
 			}
 			textboxesCount.Value =  ("Zbývá zbořit"+Environment.NewLine+count+" kostiček.");
 
 			if (count==0) {
-				final = true;
+				gameStateNow = 2;
 			}
 
 			return returnBool;
 		}
 
-		bool garbageMoved = false;
-		bool timerStarted = false;
-		Timer waitAfterGarbage = new Timer(2000);
-		bool waitAfterGarbageElapsed = false;
-		void endAction()
+		Timer waitAfterGarbage = new Timer();
+		void waitAndSetGameAction(int nextState, int interval)
 		{
+			gameStateNow = 0;
+			waitAfterGarbage.Interval = interval;
+			waitAfterGarbage.AutoReset = false;
+			waitAfterGarbage.Elapsed += delegate {
+				gameStateNow = nextState;
+			};
+			waitAfterGarbage.Start ();
 
+		}
 
-			if (!garbageMoved) {
-				garbageMoved = true;
-				Random dir = new Random ();
+		void endCleanGarbageAction()
+		{
+			Random dir = new Random ();
 
-				foreach (Node item in boxesNodesList) {
-					endMove (item,dir);
-				}
-
-				foreach (Node item in ballNodesList) {
-					endMove (item,dir);
-				}				
+			foreach (Node item in boxesNodesList) {
+				endMove (item,dir);
 			}
 
-			if (!timerStarted) {
-				timerStarted = true;
-				waitAfterGarbage.Elapsed += delegate {
-					waitAfterGarbageElapsed = true;
-				};
-				waitAfterGarbage.Start ();
-			}
-
-
+			foreach (Node item in ballNodesList) {
+				endMove (item,dir);
+			}				
 		}
 
 		void endMove(Node item,Random dir )
@@ -413,7 +455,7 @@ Rozbi zed.");
 			float dirZ = ((float)dir.Next (-1000, 1000)) / 1000;
 
 			item.GetComponent<RigidBody> ().SetLinearVelocity (new Vector3(dirX,dirY,dirZ)*50);
-			//oRigidBody.SetLinearVelocity (new Vector3(dirX,dirY,dirZ)*50);
+
 		}
 
 		bool getPitchedteSteps = false;
@@ -431,7 +473,7 @@ Rozbi zed.");
 		float stepYaw = 0;
 		float stepPitch = 0;
 
-		void moveCameraToFinal(Vector3 targetPosition,float targetPitch = 0, float targetYaw = 0)
+		void moveCameraToFinal(Vector3 targetPosition,float targetPitch, float targetYaw, int nextGameSate)
 		{
 
 			if (!pitchedInPosition) {
@@ -493,8 +535,20 @@ Rozbi zed.");
 				}			
 			}
 
+			if (	movedInPosition == true
+				&& 	yawedInPosition == true
+				&& 	pitchedInPosition == true) {
+				gameStateNow = nextGameSate;
+			}
 
 
+		}
+
+		void createBoxes ()
+		{
+			for (int i = 0; i < 1; i++) {
+				createBoxAndAddToList (new Vector3 (0f, 50f, 0f), boxesNodesList);
+			}
 		}
 
 	}

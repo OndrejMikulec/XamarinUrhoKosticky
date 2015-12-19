@@ -4,8 +4,8 @@
     <Files>
       <File FileName="UrhoKosticky\MainActivity.cs" Line="1" Column="1" />
       <File FileName="UrhoKosticky\KostickyActivity.cs" Line="1" Column="1" />
-      <File FileName="UrhoKosticky\Kosticky.cs" Line="454" Column="46" />
-      <File FileName="UrhoKosticky\boxText.cs" Line="73" Column="39" />
+      <File FileName="UrhoKosticky\Kosticky.cs" Line="41" Column="23" />
+      <File FileName="UrhoKosticky\boxColorSchemas.cs" Line="15" Column="20" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
