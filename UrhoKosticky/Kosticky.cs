@@ -11,12 +11,33 @@ using Urho.Gui;
 using Urho.Physics;
 
 
-
 namespace UrhoKosticky
 {
 	public class Kosticky : Application
 	{
-		
+		Material matGray;
+		Material matYellow;
+		Material matRed;
+		Material matGreen;
+		Material matBlue;
+		Material matOrange;
+
+		static List<Material> matRandomList = new List<Material> () ;
+		Material matRandomizer()
+		{
+			if (matRandomList.Count==0) {
+				matRandomList.Add (matYellow);
+				matRandomList.Add (matRed);
+				matRandomList.Add (matGreen);
+				matRandomList.Add (matBlue);
+			}
+
+			Material returnMat;
+			Random oRandom = new Random ();
+			returnMat = matRandomList[oRandom.Next (0, matRandomList.Count - 1)];
+			matRandomList.Remove (returnMat);
+			return returnMat;
+		}
 
 		Scene scene;
 		Node CameraNode;
@@ -62,6 +83,14 @@ namespace UrhoKosticky
 
 		protected override void Start()
 		{
+			Input.SubscribeToKeyDown(e => { if (e.Key == Key.Esc) Engine.Exit(); });
+
+			matGray = ResourceCache.GetMaterial ("Materials/M_0132_LightGray.xml");
+			matYellow = ResourceCache.GetMaterial ("Materials/M_0056_Yellow.xml");
+			matRed = ResourceCache.GetMaterial ("Materials/M_0020_Red.xml");
+			matGreen = ResourceCache.GetMaterial ("Materials/M_0060_GrassGreen.xml");
+			matBlue = ResourceCache.GetMaterial ("Materials/M_0103_Blue.xml");
+			matOrange = ResourceCache.GetMaterial ("Materials/M_0039_DarkOrange.xml");
 						
 			Graphics.SetWindowIcon(ResourceCache.GetImage ("Textures/UrhoIcon.png"));
 			Graphics.WindowTitle = "PF 2016";
@@ -97,12 +126,14 @@ namespace UrhoKosticky
 					destroyCheckOn = true;
 
 				}  else if (gameStateNow == 100) {
+					KostickyActivity.oVibrator.Vibrate (100);
 					endCleanGarbageAction ();
 
 				} else if (gameStateNow > 100 && gameStateNow < 200 ){
 					moveCameraToFinal (cameraStartPosition,0,0);
 
 				}  else if (gameStateNow == 200){
+					KostickyActivity.oVibrator.Vibrate (100);
 					endCleanGarbageAction ();
 					removeCollision (boxesNodesList);
 					boxesNodesList.Clear ();
@@ -112,12 +143,13 @@ namespace UrhoKosticky
 
 				} else if (gameStatesForNewBoxes!=null && gameStateNow >= gameStatesForNewBoxes[0] && gameStateNow <= gameStatesForNewBoxes[gameStatesForNewBoxes.Count-1]){
 					if (gameStatesForNewBoxes.Contains (gameStateNow)) {
-						createBoxAndAddToList (new Vector3 (0f, 50f, 0f),boxesNodesList);
+						createBoxAndAddToList (new Vector3 (0f, 50f, 0f));
 					}
 
 				} else if (gameStatesForNewBoxes!=null && gameStateNow==gameStatesForNewBoxes[gameStatesForNewBoxes.Count-1]+300) {
 					removeCollision (boxesNodesList);
 					resetRotation (boxesNodesList);
+					KostickyActivity.oVibrator.Vibrate (100);
 					buildNewWall ();
 					gameStateTemp = gameStateNow;
 
@@ -125,52 +157,72 @@ namespace UrhoKosticky
 					setCollision (boxesNodesList);
 
 				} else if (gameStateNow==gameStateTemp+100) {
-					colorBoxesByColorSchema (boxesNodesList,BoxColorSchemas.boxes2 (-5,2),ResourceCache.GetMaterial ("Materials/M_0056_Yellow.xml"));
+					KostickyActivity.oVibrator.Vibrate (50);
+					colorBoxesBySchema (BoxColorSchemas.boxes2 (-5,2),matRandomizer());
 
 				}  else if (gameStateNow==gameStateTemp+200) {
-					colorBoxesByColorSchema (boxesNodesList,BoxColorSchemas.boxes0 (-1,2),ResourceCache.GetMaterial ("Materials/M_0056_Yellow.xml"));
+					KostickyActivity.oVibrator.Vibrate (50);
+					colorBoxesBySchema (BoxColorSchemas.boxes0 (-1,2),matRandomizer());
 
 				}  else if (gameStateNow==gameStateTemp+300) {
-					colorBoxesByColorSchema (boxesNodesList,BoxColorSchemas.boxes1 (3,2),ResourceCache.GetMaterial ("Materials/M_0056_Yellow.xml"));
+					KostickyActivity.oVibrator.Vibrate (50);
+					colorBoxesBySchema (BoxColorSchemas.boxes1 (3,2),matRandomizer());
 
 				}  else if (gameStateNow==gameStateTemp+400) {
-					colorBoxesByColorSchema (boxesNodesList,BoxColorSchemas.boxes5 (5,2),ResourceCache.GetMaterial ("Materials/M_0056_Yellow.xml"));
+					KostickyActivity.oVibrator.Vibrate (50);
+					colorBoxesBySchema (BoxColorSchemas.boxes6 (5,2),matRandomizer());
 
 				} else if (gameStateNow==gameStateTemp+500) {
-					destroyCheckOn = true;
+					resetVariablesToStart ();
+
 				} 
 
 			}
 
 
-			if (destroyCheckOn == true && destroyStateCheck ()) {
+			if (destroyCheckOn == true && boxesDestroyStateCheck ()) {
 				idle = false;
 				destroyCheckOn = false;
 			}
 
 		}
 
+		void resetVariablesToStart()
+		{
+			getPitchedteSteps = false;
+			getYawedteSteps = false;
+			getMoveSteps = false;
+
+			movedInPosition = false;
+			yawedInPosition = false;
+			pitchedInPosition = false;
+
+			gameStateNow = 0;
+		}
+
+		int screenJoystickIndex;
 		void initControls()
 		{
-			string WithMyButton =
-				"<patch>" +
-				"    <remove sel=\"/element/element[./attribute[@name='Name' and @value='Button1']]/attribute[@name='Is Visible']\" />" +
-				"    <replace sel=\"/element/element[./attribute[@name='Name' and @value='Button1']]/element[./attribute[@name='Name' and @value='Label']]/attribute[@name='Text']/@value\">Fire</replace>" +
-				"    <add sel=\"/element/element[./attribute[@name='Name' and @value='Button1']]\">" +
-				"        <element type=\"Text\">" +
-				"            <attribute name=\"Name\" value=\"KeyBinding\" />" +
-				"            <attribute name=\"Text\" value=\"SPACE\" />" +
-				"        </element>" +
-				"    </add>" +
-				"</patch>";
+			TouchEnabled = true;
+
+			var layout = ResourceCache.GetXmlFile("UI/ScreenJoystickMy.xml");
+			screenJoystickIndex = Input.AddScreenJoystick(layout, ResourceCache.GetXmlFile("UI/DefaultStyle.xml"));
+			Input.SetScreenJoystickVisible(screenJoystickIndex, true);
+		}
+
+		void hideMegaButton ()
+		{
+
+			Input.RemoveScreenJoystick (screenJoystickIndex);
+	
 
 			TouchEnabled = true;
-			var layout = ResourceCache.GetXmlFile("UI/ScreenJoystick_Samples.xml");
-			XmlFile patchXmlFile = new XmlFile();
-			patchXmlFile.FromString(WithMyButton);
-			layout.Patch(patchXmlFile);
-			var screenJoystickIndex = Input.AddScreenJoystick(layout, ResourceCache.GetXmlFile("UI/DefaultStyle.xml"));
-			Input.SetScreenJoystickVisible(screenJoystickIndex, true);			
+			var layout = ResourceCache.GetXmlFile("UI/ScreenJoystickMyNoMega.xml");
+
+			screenJoystickIndex = Input.AddScreenJoystick(layout, ResourceCache.GetXmlFile("UI/DefaultStyle.xml"));
+			Input.SetScreenJoystickVisible(screenJoystickIndex, true);
+
+			Input.Update ();
 		}
 
 		void SimpleMoveCamera3D (float timeStep, float moveSpeed = 10.0f)
@@ -192,11 +244,17 @@ namespace UrhoKosticky
 			if (Input.GetKeyDown (Key.S)) CameraNode.Translate (-Vector3.UnitZ * moveSpeed * timeStep);
 			if (Input.GetKeyDown (Key.A)) CameraNode.Translate (-Vector3.UnitX * moveSpeed * timeStep);
 			if (Input.GetKeyDown (Key.D)) CameraNode.Translate ( Vector3.UnitX * moveSpeed * timeStep);
-			if (Input.GetKeyDown (Key.Space)) {
+			if (Input.GetKeyPress (Key.Space)||Input.GetKeyPress (Key.M)) {
 				textInstrukce.Value = "";
 				if (nabito) {
 					nabito = false;
-					SpawnObject ();
+					if (Input.GetKeyPress (Key.M)) {
+						SpawnObject (true);
+						hideMegaButton ();
+					} else {
+						SpawnObject (false);
+					}
+
 					nabijeni.Start ();
 
 					if (textInstrukce.Value != null) {
@@ -322,17 +380,14 @@ namespace UrhoKosticky
 
 			for (int x = 0; x <= 14; x++) {
 				for (int y = 0; y <= 7; y++) {
-					createBoxAndAddToList (
-						new Vector3 ((float)x + 0.3f - 6f, (float)y + 0.3f, 0), 
-						boxesNodesList
-					);
+					createBoxAndAddToList (new Vector3 ((float)x + 0.3f - 6f, (float)y + 0.3f, 0));
 				}
 			}
 
-			colorBoxesByColorSchema (boxesNodesList, BoxColorSchemas.boxes2 (-5, 2), ResourceCache.GetMaterial ("Materials/M_0020_Red.xml"));
-			colorBoxesByColorSchema (boxesNodesList, BoxColorSchemas.boxes0 (-1, 2), ResourceCache.GetMaterial ("Materials/M_0060_GrassGreen.xml"));
-			colorBoxesByColorSchema (boxesNodesList, BoxColorSchemas.boxes1 (3, 2), ResourceCache.GetMaterial ("Materials/M_0056_Yellow.xml"));
-			colorBoxesByColorSchema (boxesNodesList, BoxColorSchemas.boxes5 (5, 2), ResourceCache.GetMaterial ("Materials/M_0103_Blue.xml"));
+			colorBoxesBySchema (BoxColorSchemas.boxes2 (-5, 2), matRandomizer());
+			colorBoxesBySchema (BoxColorSchemas.boxes0 (-1, 2), matRandomizer());
+			colorBoxesBySchema (BoxColorSchemas.boxes1 (3, 2), matRandomizer());
+			colorBoxesBySchema (BoxColorSchemas.boxes5 (5, 2), matRandomizer());
 
 			CameraNode = new Node();
 			Camera oCamera = CameraNode.CreateComponent<Camera>();
@@ -342,13 +397,13 @@ namespace UrhoKosticky
 
 		}
 
-		public void createBoxAndAddToList(Vector3 position, List<Node> listToAdd)
+		public void createBoxAndAddToList(Vector3 position)
 		{
 			Node boxNode = scene.CreateChild("Box");
 			boxNode.Position = position;
 			StaticModel boxObject = boxNode.CreateComponent<StaticModel>();
 			boxObject.Model=ResourceCache.GetModel("Models/Box.mdl");
-			boxObject.SetMaterial (ResourceCache.GetMaterial ("Materials/M_0132_LightGray.xml"));
+			boxObject.SetMaterial (matGray);
 			boxObject.CastShadows = true;
 			RigidBody body = boxNode.CreateComponent<RigidBody>();
 			body.Mass=1f;
@@ -356,12 +411,12 @@ namespace UrhoKosticky
 			CollisionShape shape = boxNode.CreateComponent<CollisionShape>();
 			shape.SetBox(Vector3.One, Vector3.Zero, Quaternion.Identity);
 
-			listToAdd.Add (boxNode);
+			boxesNodesList.Add (boxNode);
 		}
 
-		void colorBoxesByColorSchema(List<Node> boxesListToColor, List<int[]> schema, Material mat)
+		void colorBoxesBySchema(List<int[]> schema, Material mat)
 		{
-			foreach (Node item in boxesListToColor) {
+			foreach (Node item in boxesNodesList) {
 				int[] roundedPosition = new int[] {
 					(int)Math.Round (item.Position.X),
 					(int)Math.Round (item.Position.Y),
@@ -375,16 +430,21 @@ namespace UrhoKosticky
 		}
 
 
-		void SpawnObject()
+		void SpawnObject(bool mega)
 		{
-			if (KostickyActivity.oVibrator!=null) {
-				KostickyActivity.oVibrator.Vibrate (50);
-			}
 
 			var boxNode = scene.CreateChild("SmallBox");
 			boxNode.Position = CameraNode.Position;
 			boxNode.Rotation = CameraNode.Rotation;
-			boxNode.SetScale(0.5f);
+
+			if (mega) {
+				if (KostickyActivity.oVibrator!=null) {	KostickyActivity.oVibrator.Vibrate (500);}
+				boxNode.SetScale(3);
+			} else {
+				if (KostickyActivity.oVibrator!=null) {	KostickyActivity.oVibrator.Vibrate (50);}
+				boxNode.SetScale(0.5f);
+			}
+
 
 			StaticModel boxModel = boxNode.CreateComponent<StaticModel>();
 			boxModel.Model = ResourceCache.GetModel("Models/Sphere.mdl");
@@ -392,7 +452,14 @@ namespace UrhoKosticky
 			boxModel.CastShadows = true;
 
 			var body = boxNode.CreateComponent<RigidBody>();
-			body.Mass = 0.2f;
+
+			if (mega) {
+				body.Mass = 10f;
+			} else {
+				body.Mass = 0.2f;
+			}
+
+
 			body.Friction = 0.5f;
 			var shape = boxNode.CreateComponent<CollisionShape>();
 			shape.SetBox(Vector3.One, Vector3.Zero, Quaternion.Identity);
@@ -422,7 +489,7 @@ namespace UrhoKosticky
 			return false;
 		}
 
-		bool destroyStateCheck()
+		bool boxesDestroyStateCheck()
 		{
 
 			bool returnBool = true;
@@ -433,7 +500,7 @@ namespace UrhoKosticky
 					returnBool = false;
 
 				} else {
-					item.GetComponent<StaticModel> ().SetMaterial(ResourceCache.GetMaterial("Materials/M_0039_DarkOrange.xml"));
+					item.GetComponent<StaticModel> ().SetMaterial(matOrange);
 				}
 			}
 			textboxesCount.Value =  ("Zbývá zbořit"+Environment.NewLine+count+" kostiček.");

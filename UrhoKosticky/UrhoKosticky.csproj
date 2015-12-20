@@ -132,7 +132,6 @@
     <AndroidAsset Include="Assets\Data\Textures\UrhoDecalAlpha.dds" />
     <AndroidAsset Include="Assets\Data\Textures\UrhoIcon.icns" />
     <AndroidAsset Include="Assets\Data\Textures\UrhoIcon.png" />
-    <AndroidAsset Include="Assets\Data\UI\ScreenJoystick_Samples.xml" />
     <AndroidAsset Include="Assets\Data\Materials\M_0039_DarkOrange.xml" />
     <AndroidAsset Include="Assets\Data\Materials\M_0020_Red.xml" />
     <AndroidAsset Include="Assets\Data\Materials\M_0056_Yellow.xml" />
@@ -154,7 +153,8 @@
     <AndroidAsset Include="Assets\Data\Materials\StoneEnvMapSmall.xml" />
     <AndroidAsset Include="Assets\Data\Textures\StoneDiffuse.dds" />
     <AndroidAsset Include="Assets\Data\Textures\Skybox.xml" />
-    <AndroidAsset Include="Assets\Data\UI\ScreenJoystick.xml" />
     <AndroidAsset Include="Assets\Data\Textures\StoneNormal.dds" />
+    <AndroidAsset Include="Assets\Data\UI\ScreenJoystickMy.xml" />
+    <AndroidAsset Include="Assets\Data\UI\ScreenJoystickMyNoMega.xml" />
   </ItemGroup>
 </Project>
