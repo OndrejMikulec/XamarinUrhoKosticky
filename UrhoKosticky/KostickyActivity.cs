@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 
 using Android.App;
-using Android.Content;
+//using Android.Content;
 using Android.OS;
 using Android.Runtime;
 using Android.Views;
@@ -22,6 +22,8 @@ namespace UrhoKosticky
 		ScreenOrientation = ScreenOrientation.Landscape)]
 	public class KostickyActivity : Activity
 	{
+		public static Vibrator oVibrator;
+
 		protected override void OnCreate (Bundle savedInstanceState)
 		{
 			base.OnCreate (savedInstanceState);
@@ -31,6 +33,10 @@ namespace UrhoKosticky
 			var surface = UrhoSurface.CreateSurface<Kosticky>(this);
 			mLayout.AddView(surface);
 			SetContentView(mLayout);
+
+			try {
+				oVibrator = (Vibrator)this.GetSystemService (Android.Content.Context.VibratorService);
+			} catch  {	}
 		}
 
 		protected override void OnResume()

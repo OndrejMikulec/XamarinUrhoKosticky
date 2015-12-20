@@ -23,3 +23,4 @@ C:\Users\Ondra\Documents\Projects\UrhoKosticky\UrhoKosticky\obj\Debug\res\mipmap
 C:\Users\Ondra\Documents\Projects\UrhoKosticky\UrhoKosticky\obj\Debug\res\mipmap-xxxhdpi\icon.png
 C:\Users\Ondra\Documents\Projects\UrhoKosticky\UrhoKosticky\obj\Debug\R.cs.flag
 C:\Users\Ondra\Documents\Projects\UrhoKosticky\UrhoKosticky\obj\Debug\uploadflags.txt
+C:\Users\Ondra\Documents\Projects\UrhoKosticky\UrhoKosticky\obj\Debug\UrhoKosticky.csprojResolveAssemblyReference.cache

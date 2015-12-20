@@ -16,6 +16,8 @@ namespace UrhoKosticky
 {
 	public class Kosticky : Application
 	{
+		
+
 		Scene scene;
 		Node CameraNode;
 
@@ -23,7 +25,7 @@ namespace UrhoKosticky
 		float Pitch { get; set; }
 		float Roll { get; set; }
 		bool TouchEnabled { get; set; }
-		const float TouchSensitivity = 2;
+		const float TouchSensitivity = 2.5f;
 		const float PixelSize = 0.01f;
 
 		Text textInstrukce;
@@ -37,20 +39,22 @@ namespace UrhoKosticky
 		Vector3 cameraStartPosition = new Vector3 (0.0f, 5.0f, -20.0f);
 
 
-		//0=idle
-		int gameStateNow = 1;
+		bool idle = false;
+		int gameStateNow = 0;
 
-		List<int> gameStatesForNewBoxesBuilded;
-		List<int> gameStatesForNewBoxes(int startState, int rate, int max) 
+		List<int> gameStatesForNewBoxes;
+		List<int> buildListOfGameStates(int startState, int rate, int count) 
 		{
 			List<int> returnList = new List<int> ();
-			int rateCount = rate;
-			for (int i = startState; i < max*rate; i++) {
+			int rateCount = 1;
+			for (int i = startState; i <= count*rate+startState; i++) {
 				if (rateCount==rate) {
 					returnList.Add (i);
-					rateCount = 0;
+					rateCount = 1;
+				} else {
+					rateCount++;
 				}
-				rateCount++;
+
 			}
 			return returnList;
 
@@ -58,9 +62,7 @@ namespace UrhoKosticky
 
 		protected override void Start()
 		{
-			gameStatesForNewBoxesBuilded = gameStatesForNewBoxes(7, 10, 20) ;
-
-			
+						
 			Graphics.SetWindowIcon(ResourceCache.GetImage ("Textures/UrhoIcon.png"));
 			Graphics.WindowTitle = "PF 2016";
 
@@ -73,47 +75,78 @@ namespace UrhoKosticky
 			CreateScene();
 			SetupViewport();
 
-			initInstructionsText ("Ahoj"+Environment.NewLine+"Rozbi zed.");
+			initInstructionsText ("Ahoj"+Environment.NewLine+"Rozbi starou zed.");
 			initBoxesCountText ("Zbývá "+boxesNodesList.Count+" kostiček.");
 
 			initControls ();
 
 		}
 
-
+		int gameStateTemp = 0;
+		bool destroyCheckOn = false;
 		protected override void OnUpdate(float timeStep)
 		{
 			base.OnUpdate(timeStep);
 			SimpleMoveCamera3D(timeStep);
 			MoveCameraByTouches(timeStep);
 
-			if (gameStateNow == 1) {
-				destroyStateCheck ();
-
-			} else if (gameStateNow == 2){
-				waitAndSetGameAction (3, 2000);
-
-			} else if (gameStateNow == 3) {
-				endCleanGarbageAction ();
-				gameStateNow = 4;
-
-			} else if (gameStateNow == 4){
-				moveCameraToFinal (cameraStartPosition,0,0,5);
-
-			}  else if (gameStateNow == 5){
-				waitAndSetGameAction (6, 2000);
-
-			} else if (gameStateNow == 6){
-				endCleanGarbageAction ();
-				boxesNodesList.Clear ();
-				gameStateNow = gameStatesForNewBoxesBuilded[0];
-			} else if (gameStateNow >= gameStatesForNewBoxesBuilded[0] && gameStateNow <= gameStatesForNewBoxesBuilded[gameStatesForNewBoxesBuilded.Count-1]){
-				if (gameStatesForNewBoxesBuilded.Contains (gameStateNow)) {
-					createBoxes ();
-				}
+			if (!idle) {
 				gameStateNow++;
+				if (gameStateNow == 1) {
+					idle = true;
+					destroyCheckOn = true;
+
+				}  else if (gameStateNow == 100) {
+					endCleanGarbageAction ();
+
+				} else if (gameStateNow > 100 && gameStateNow < 200 ){
+					moveCameraToFinal (cameraStartPosition,0,0);
+
+				}  else if (gameStateNow == 200){
+					endCleanGarbageAction ();
+					removeCollision (boxesNodesList);
+					boxesNodesList.Clear ();
+					removeCollision (ballNodesList);
+					ballNodesList.Clear ();
+					gameStatesForNewBoxes = buildListOfGameStates(gameStateNow+1, 10, 15*8) ;
+
+				} else if (gameStatesForNewBoxes!=null && gameStateNow >= gameStatesForNewBoxes[0] && gameStateNow <= gameStatesForNewBoxes[gameStatesForNewBoxes.Count-1]){
+					if (gameStatesForNewBoxes.Contains (gameStateNow)) {
+						createBoxAndAddToList (new Vector3 (0f, 50f, 0f),boxesNodesList);
+					}
+
+				} else if (gameStatesForNewBoxes!=null && gameStateNow==gameStatesForNewBoxes[gameStatesForNewBoxes.Count-1]+300) {
+					removeCollision (boxesNodesList);
+					resetRotation (boxesNodesList);
+					buildNewWall ();
+					gameStateTemp = gameStateNow;
+
+				} else if (gameStateNow==gameStateTemp+1) {
+					setCollision (boxesNodesList);
+
+				} else if (gameStateNow==gameStateTemp+100) {
+					colorBoxesByColorSchema (boxesNodesList,BoxColorSchemas.boxes2 (-5,2),ResourceCache.GetMaterial ("Materials/M_0056_Yellow.xml"));
+
+				}  else if (gameStateNow==gameStateTemp+200) {
+					colorBoxesByColorSchema (boxesNodesList,BoxColorSchemas.boxes0 (-1,2),ResourceCache.GetMaterial ("Materials/M_0056_Yellow.xml"));
+
+				}  else if (gameStateNow==gameStateTemp+300) {
+					colorBoxesByColorSchema (boxesNodesList,BoxColorSchemas.boxes1 (3,2),ResourceCache.GetMaterial ("Materials/M_0056_Yellow.xml"));
+
+				}  else if (gameStateNow==gameStateTemp+400) {
+					colorBoxesByColorSchema (boxesNodesList,BoxColorSchemas.boxes5 (5,2),ResourceCache.GetMaterial ("Materials/M_0056_Yellow.xml"));
+
+				} else if (gameStateNow==gameStateTemp+500) {
+					destroyCheckOn = true;
+				} 
+
 			}
 
+
+			if (destroyCheckOn == true && destroyStateCheck ()) {
+				idle = false;
+				destroyCheckOn = false;
+			}
 
 		}
 
@@ -243,7 +276,6 @@ namespace UrhoKosticky
 
 		void CreateScene()
 		{
-			var cache = ResourceCache;
 			scene = new Scene();
 
 			scene.CreateComponent<Octree>();
@@ -271,16 +303,16 @@ namespace UrhoKosticky
 			Node skyNode = scene.CreateChild("Sky");
 			skyNode.SetScale(500.0f); // The scale actually does not matter
 			Skybox skybox = skyNode.CreateComponent<Skybox>();
-			skybox.Model=cache.GetModel("Models/Box.mdl");
-			skybox.SetMaterial(cache.GetMaterial("Materials/Skybox.xml"));
+			skybox.Model=ResourceCache.GetModel("Models/Box.mdl");
+			skybox.SetMaterial(ResourceCache.GetMaterial("Materials/Skybox.xml"));
 
 			{
 				Node floorNode = scene.CreateChild("Floor");
 				floorNode.Position=new Vector3(0.0f, -0.5f, 0.0f);
 				floorNode.Scale=new Vector3(1000.0f, 1.0f, 1000.0f);
 				StaticModel floorObject = floorNode.CreateComponent<StaticModel>();
-				floorObject.Model=cache.GetModel("Models/Box.mdl");
-				floorObject.SetMaterial(cache.GetMaterial("Materials/Terrain.xml"));
+				floorObject.Model=ResourceCache.GetModel("Models/Box.mdl");
+				floorObject.SetMaterial(ResourceCache.GetMaterial("Materials/Terrain.xml"));
 
 
 				floorNode.CreateComponent<RigidBody>(); 
@@ -288,23 +320,19 @@ namespace UrhoKosticky
 				shape.SetBox(Vector3.One, Vector3.Zero, Quaternion.Identity);
 			}
 
-
 			for (int x = 0; x <= 14; x++) {
-				for (int z = 0; z <= 0; z++) {
-					for (int y = 0; y <= 7; y++) {
-
-						createBoxAndAddToList (
-							new Vector3 ((float)x + 0.3f - 6f, (float)y + 0.3f, (float)z + 0.3f), 
-							boxesNodesList
-						);
-					}
+				for (int y = 0; y <= 7; y++) {
+					createBoxAndAddToList (
+						new Vector3 ((float)x + 0.3f - 6f, (float)y + 0.3f, 0), 
+						boxesNodesList
+					);
 				}
 			}
 
-			colorBoxesByColorSchema (boxesNodesList, BoxColorSchemas.boxes2 (-5, 2), cache.GetMaterial ("Materials/M_0020_Red.xml"));
-			colorBoxesByColorSchema (boxesNodesList, BoxColorSchemas.boxes0 (-1, 2), cache.GetMaterial ("Materials/M_0060_GrassGreen.xml"));
-			colorBoxesByColorSchema (boxesNodesList, BoxColorSchemas.boxes1 (3, 2), cache.GetMaterial ("Materials/M_0056_Yellow.xml"));
-			colorBoxesByColorSchema (boxesNodesList, BoxColorSchemas.boxes5 (5, 2), cache.GetMaterial ("Materials/M_0103_Blue.xml"));
+			colorBoxesByColorSchema (boxesNodesList, BoxColorSchemas.boxes2 (-5, 2), ResourceCache.GetMaterial ("Materials/M_0020_Red.xml"));
+			colorBoxesByColorSchema (boxesNodesList, BoxColorSchemas.boxes0 (-1, 2), ResourceCache.GetMaterial ("Materials/M_0060_GrassGreen.xml"));
+			colorBoxesByColorSchema (boxesNodesList, BoxColorSchemas.boxes1 (3, 2), ResourceCache.GetMaterial ("Materials/M_0056_Yellow.xml"));
+			colorBoxesByColorSchema (boxesNodesList, BoxColorSchemas.boxes5 (5, 2), ResourceCache.GetMaterial ("Materials/M_0103_Blue.xml"));
 
 			CameraNode = new Node();
 			Camera oCamera = CameraNode.CreateComponent<Camera>();
@@ -316,12 +344,11 @@ namespace UrhoKosticky
 
 		public void createBoxAndAddToList(Vector3 position, List<Node> listToAdd)
 		{
-			var cache = ResourceCache;
 			Node boxNode = scene.CreateChild("Box");
 			boxNode.Position = position;
 			StaticModel boxObject = boxNode.CreateComponent<StaticModel>();
-			boxObject.Model=cache.GetModel("Models/Box.mdl");
-			boxObject.SetMaterial (cache.GetMaterial ("Materials/M_0132_LightGray.xml"));
+			boxObject.Model=ResourceCache.GetModel("Models/Box.mdl");
+			boxObject.SetMaterial (ResourceCache.GetMaterial ("Materials/M_0132_LightGray.xml"));
 			boxObject.CastShadows = true;
 			RigidBody body = boxNode.CreateComponent<RigidBody>();
 			body.Mass=1f;
@@ -350,7 +377,9 @@ namespace UrhoKosticky
 
 		void SpawnObject()
 		{
-			var cache = ResourceCache;
+			if (KostickyActivity.oVibrator!=null) {
+				KostickyActivity.oVibrator.Vibrate (50);
+			}
 
 			var boxNode = scene.CreateChild("SmallBox");
 			boxNode.Position = CameraNode.Position;
@@ -358,8 +387,8 @@ namespace UrhoKosticky
 			boxNode.SetScale(0.5f);
 
 			StaticModel boxModel = boxNode.CreateComponent<StaticModel>();
-			boxModel.Model = cache.GetModel("Models/Sphere.mdl");
-			boxModel.SetMaterial(cache.GetMaterial("Materials/StoneEnvMapSmall.xml"));
+			boxModel.Model = ResourceCache.GetModel("Models/Sphere.mdl");
+			boxModel.SetMaterial(ResourceCache.GetMaterial("Materials/StoneEnvMapSmall.xml"));
 			boxModel.CastShadows = true;
 
 			var body = boxNode.CreateComponent<RigidBody>();
@@ -395,7 +424,6 @@ namespace UrhoKosticky
 
 		bool destroyStateCheck()
 		{
-			var cache = ResourceCache;
 
 			bool returnBool = true;
 			int count = 0;
@@ -405,29 +433,12 @@ namespace UrhoKosticky
 					returnBool = false;
 
 				} else {
-					item.GetComponent<StaticModel> ().SetMaterial(cache.GetMaterial("Materials/M_0039_DarkOrange.xml"));
+					item.GetComponent<StaticModel> ().SetMaterial(ResourceCache.GetMaterial("Materials/M_0039_DarkOrange.xml"));
 				}
 			}
 			textboxesCount.Value =  ("Zbývá zbořit"+Environment.NewLine+count+" kostiček.");
 
-			if (count==0) {
-				gameStateNow = 2;
-			}
-
 			return returnBool;
-		}
-
-		Timer waitAfterGarbage = new Timer();
-		void waitAndSetGameAction(int nextState, int interval)
-		{
-			gameStateNow = 0;
-			waitAfterGarbage.Interval = interval;
-			waitAfterGarbage.AutoReset = false;
-			waitAfterGarbage.Elapsed += delegate {
-				gameStateNow = nextState;
-			};
-			waitAfterGarbage.Start ();
-
 		}
 
 		void endCleanGarbageAction()
@@ -473,7 +484,7 @@ namespace UrhoKosticky
 		float stepYaw = 0;
 		float stepPitch = 0;
 
-		void moveCameraToFinal(Vector3 targetPosition,float targetPitch, float targetYaw, int nextGameSate)
+		void moveCameraToFinal(Vector3 targetPosition,float targetPitch, float targetYaw)
 		{
 
 			if (!pitchedInPosition) {
@@ -538,16 +549,46 @@ namespace UrhoKosticky
 			if (	movedInPosition == true
 				&& 	yawedInPosition == true
 				&& 	pitchedInPosition == true) {
-				gameStateNow = nextGameSate;
+				idle = false;
 			}
 
 
 		}
 
-		void createBoxes ()
+		void buildNewWall ()
 		{
-			for (int i = 0; i < 1; i++) {
-				createBoxAndAddToList (new Vector3 (0f, 50f, 0f), boxesNodesList);
+
+			int count = 0;
+			for (int x = 0; x <= 14; x++) {
+				for (int y = 0; y <= 7; y++) {
+					if (count==boxesNodesList.Count) {
+						return;
+					}
+					boxesNodesList[count].Position = new Vector3 ((float)x + 0.3f - 6f, (float)y + 0.5f, 0);
+					count++;
+				}
+			}
+		}
+
+		void removeCollision(List <Node> nodesList)
+		{
+			foreach (Node item in nodesList) {
+				item.RemoveComponent<CollisionShape> ();
+			}
+		}
+
+		void setCollision(List <Node> nodesList)
+		{
+			foreach (Node item in nodesList) {
+				CollisionShape shape = item.CreateComponent<CollisionShape>();
+				shape.SetBox(Vector3.One, Vector3.Zero, Quaternion.Identity);
+			}
+		}
+
+		void resetRotation(List <Node> nodesList)
+		{
+			foreach (Node item in nodesList) {
+				item.Rotation = new Quaternion (0f, 0f, 0f);
 			}
 		}
 
