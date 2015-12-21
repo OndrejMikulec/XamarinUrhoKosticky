@@ -36,6 +36,7 @@
     <WarningLevel>4</WarningLevel>
     <ConsolePause>false</ConsolePause>
     <AndroidUseSharedRuntime>false</AndroidUseSharedRuntime>
+    <EnableProguard>true</EnableProguard>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -65,9 +66,10 @@
     <Compile Include="MainActivity.cs" />
     <Compile Include="Resources\Resource.designer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Kosticky.cs" />
     <Compile Include="KostickyActivity.cs" />
     <Compile Include="boxColorSchemas.cs" />
+    <Compile Include="Kosticky.cs" />
+    <Compile Include="Assets.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\AboutResources.txt" />
@@ -102,7 +104,6 @@
     <AndroidAsset Include="Assets\Data\Fonts\Anonymous Pro.ttf" />
     <AndroidAsset Include="Assets\Data\Fonts\OFL.txt" />
     <AndroidAsset Include="Assets\Data\Fonts\read_me.html" />
-    <AndroidAsset Include="Assets\Data\Materials\Skybox.xml" />
     <AndroidAsset Include="Assets\Data\Materials\Terrain.xml" />
     <AndroidAsset Include="Assets\Data\Models\Box.mdl" />
     <AndroidAsset Include="Assets\Data\Models\Plane.mdl" />
@@ -117,21 +118,13 @@
     <AndroidAsset Include="Assets\Data\PostProcess\GammaCorrection.xml" />
     <AndroidAsset Include="Assets\Data\PostProcess\GreyScale.xml" />
     <AndroidAsset Include="Assets\Data\PostProcess\Tonemap.xml" />
-    <AndroidAsset Include="Assets\Data\Textures\Logo.png" />
-    <AndroidAsset Include="Assets\Data\Textures\Logo.xml" />
-    <AndroidAsset Include="Assets\Data\Textures\LogoLarge.png" />
-    <AndroidAsset Include="Assets\Data\Textures\LogoLarge.xml" />
     <AndroidAsset Include="Assets\Data\Textures\TerrainDetail1.dds" />
     <AndroidAsset Include="Assets\Data\Textures\TerrainDetail2.dds" />
     <AndroidAsset Include="Assets\Data\Textures\TerrainDetail3.dds" />
     <AndroidAsset Include="Assets\Data\Textures\TerrainWeights.dds" />
     <AndroidAsset Include="Assets\Data\Textures\TouchInput.png" />
-    <AndroidAsset Include="Assets\Data\Textures\UI.png" />
-    <AndroidAsset Include="Assets\Data\Textures\UI.xml" />
     <AndroidAsset Include="Assets\Data\Textures\UrhoDecal.dds" />
     <AndroidAsset Include="Assets\Data\Textures\UrhoDecalAlpha.dds" />
-    <AndroidAsset Include="Assets\Data\Textures\UrhoIcon.icns" />
-    <AndroidAsset Include="Assets\Data\Textures\UrhoIcon.png" />
     <AndroidAsset Include="Assets\Data\Materials\M_0039_DarkOrange.xml" />
     <AndroidAsset Include="Assets\Data\Materials\M_0020_Red.xml" />
     <AndroidAsset Include="Assets\Data\Materials\M_0056_Yellow.xml" />
@@ -139,22 +132,25 @@
     <AndroidAsset Include="Assets\Data\Materials\M_0103_Blue.xml" />
     <AndroidAsset Include="Assets\Data\Materials\M_0132_LightGray.xml" />
     <AndroidAsset Include="Assets\Data\Textures\SkyboxNight.xml" />
-    <AndroidAsset Include="Assets\Data\Textures\stars_back.dds" />
-    <AndroidAsset Include="Assets\Data\Textures\stars_back.jpg" />
-    <AndroidAsset Include="Assets\Data\Textures\stars_front.dds" />
-    <AndroidAsset Include="Assets\Data\Textures\stars_front.jpg" />
-    <AndroidAsset Include="Assets\Data\Textures\stars_left.dds" />
-    <AndroidAsset Include="Assets\Data\Textures\stars_left.jpg" />
-    <AndroidAsset Include="Assets\Data\Textures\stars_right.dds" />
-    <AndroidAsset Include="Assets\Data\Textures\stars_right.jpg" />
-    <AndroidAsset Include="Assets\Data\Textures\stars_top.dds" />
-    <AndroidAsset Include="Assets\Data\Textures\stars_top.jpg" />
     <AndroidAsset Include="Assets\Data\UI\DefaultStyle.xml" />
     <AndroidAsset Include="Assets\Data\Materials\StoneEnvMapSmall.xml" />
     <AndroidAsset Include="Assets\Data\Textures\StoneDiffuse.dds" />
-    <AndroidAsset Include="Assets\Data\Textures\Skybox.xml" />
-    <AndroidAsset Include="Assets\Data\Textures\StoneNormal.dds" />
     <AndroidAsset Include="Assets\Data\UI\ScreenJoystickMy.xml" />
     <AndroidAsset Include="Assets\Data\UI\ScreenJoystickMyNoMega.xml" />
+    <AndroidAsset Include="Assets\Data\Textures\SkyboxSunSet.xml" />
+    <AndroidAsset Include="Assets\Data\Textures\SunSetBack2048.png" />
+    <AndroidAsset Include="Assets\Data\Textures\SunSetDown2048.png" />
+    <AndroidAsset Include="Assets\Data\Textures\SunSetFront2048.png" />
+    <AndroidAsset Include="Assets\Data\Textures\SunSetLeft2048.png" />
+    <AndroidAsset Include="Assets\Data\Textures\SunSetRight2048.png" />
+    <AndroidAsset Include="Assets\Data\Materials\SkyboxNight.xml" />
+    <AndroidAsset Include="Assets\Data\Materials\SkyboxSunSet.xml" />
+    <AndroidAsset Include="Assets\Data\Textures\SunSetBack2048.dds" />
+    <AndroidAsset Include="Assets\Data\Textures\SunSetDown2048.dds" />
+    <AndroidAsset Include="Assets\Data\Textures\SunSetFront2048.dds" />
+    <AndroidAsset Include="Assets\Data\Textures\SunSetLeft2048.dds" />
+    <AndroidAsset Include="Assets\Data\Textures\SunSetRight2048.dds" />
+    <AndroidAsset Include="Assets\Data\Textures\SunSetUp2048.dds" />
+    <AndroidAsset Include="Assets\Data\Textures\SunSetUp2048.png" />
   </ItemGroup>
 </Project>

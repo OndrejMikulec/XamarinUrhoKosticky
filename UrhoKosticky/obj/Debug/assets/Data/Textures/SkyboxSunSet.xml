@@ -1,0 +1,9 @@
+<cubemap>
+    <face name="SunSetRight2048.dds" />
+    <face name="SunSetLeft2048.dds" />
+    <face name="SunSetUp2048.dds" />
+    <face name="SunSetDown2048.dds" />
+    <face name="SunSetBack2048.dds" />
+    <face name="SunSetFront2048.dds" />
+    <quality low="0" />
+</cubemap>

@@ -15,21 +15,15 @@ namespace UrhoKosticky
 {
 	public class Kosticky : Application
 	{
-		Material matGray;
-		Material matYellow;
-		Material matRed;
-		Material matGreen;
-		Material matBlue;
-		Material matOrange;
 
 		static List<Material> matRandomList = new List<Material> () ;
 		Material matRandomizer()
 		{
 			if (matRandomList.Count==0) {
-				matRandomList.Add (matYellow);
-				matRandomList.Add (matRed);
-				matRandomList.Add (matGreen);
-				matRandomList.Add (matBlue);
+				matRandomList.Add (ResourceCache.GetMaterial (Assets.Materials.yellow) );
+				matRandomList.Add (ResourceCache.GetMaterial (Assets.Materials.red));
+				matRandomList.Add (ResourceCache.GetMaterial (Assets.Materials.green));
+				matRandomList.Add (ResourceCache.GetMaterial (Assets.Materials.blue));
 			}
 
 			Material returnMat;
@@ -84,15 +78,7 @@ namespace UrhoKosticky
 		protected override void Start()
 		{
 			Input.SubscribeToKeyDown(e => { if (e.Key == Key.Esc) Engine.Exit(); });
-
-			matGray = ResourceCache.GetMaterial ("Materials/M_0132_LightGray.xml");
-			matYellow = ResourceCache.GetMaterial ("Materials/M_0056_Yellow.xml");
-			matRed = ResourceCache.GetMaterial ("Materials/M_0020_Red.xml");
-			matGreen = ResourceCache.GetMaterial ("Materials/M_0060_GrassGreen.xml");
-			matBlue = ResourceCache.GetMaterial ("Materials/M_0103_Blue.xml");
-			matOrange = ResourceCache.GetMaterial ("Materials/M_0039_DarkOrange.xml");
 						
-			Graphics.SetWindowIcon(ResourceCache.GetImage ("Textures/UrhoIcon.png"));
 			Graphics.WindowTitle = "PF 2016";
 
 			nabijeni = new Timer (500);
@@ -126,14 +112,12 @@ namespace UrhoKosticky
 					destroyCheckOn = true;
 
 				}  else if (gameStateNow == 100) {
-					KostickyActivity.oVibrator.Vibrate (100);
 					endCleanGarbageAction ();
 
 				} else if (gameStateNow > 100 && gameStateNow < 200 ){
 					moveCameraToFinal (cameraStartPosition,0,0);
 
 				}  else if (gameStateNow == 200){
-					KostickyActivity.oVibrator.Vibrate (100);
 					endCleanGarbageAction ();
 					removeCollision (boxesNodesList);
 					boxesNodesList.Clear ();
@@ -149,7 +133,6 @@ namespace UrhoKosticky
 				} else if (gameStatesForNewBoxes!=null && gameStateNow==gameStatesForNewBoxes[gameStatesForNewBoxes.Count-1]+300) {
 					removeCollision (boxesNodesList);
 					resetRotation (boxesNodesList);
-					KostickyActivity.oVibrator.Vibrate (100);
 					buildNewWall ();
 					gameStateTemp = gameStateNow;
 
@@ -157,19 +140,19 @@ namespace UrhoKosticky
 					setCollision (boxesNodesList);
 
 				} else if (gameStateNow==gameStateTemp+100) {
-					KostickyActivity.oVibrator.Vibrate (50);
+					KostickyActivity.oVibrator.Vibrate (KostickyActivity.vibrateSmall);
 					colorBoxesBySchema (BoxColorSchemas.boxes2 (-5,2),matRandomizer());
 
 				}  else if (gameStateNow==gameStateTemp+200) {
-					KostickyActivity.oVibrator.Vibrate (50);
+					KostickyActivity.oVibrator.Vibrate (KostickyActivity.vibrateSmall);
 					colorBoxesBySchema (BoxColorSchemas.boxes0 (-1,2),matRandomizer());
 
 				}  else if (gameStateNow==gameStateTemp+300) {
-					KostickyActivity.oVibrator.Vibrate (50);
+					KostickyActivity.oVibrator.Vibrate (KostickyActivity.vibrateSmall);
 					colorBoxesBySchema (BoxColorSchemas.boxes1 (3,2),matRandomizer());
 
 				}  else if (gameStateNow==gameStateTemp+400) {
-					KostickyActivity.oVibrator.Vibrate (50);
+					KostickyActivity.oVibrator.Vibrate (KostickyActivity.vibrateSmall);
 					colorBoxesBySchema (BoxColorSchemas.boxes6 (5,2),matRandomizer());
 
 				} else if (gameStateNow==gameStateTemp+500) {
@@ -205,8 +188,8 @@ namespace UrhoKosticky
 		{
 			TouchEnabled = true;
 
-			var layout = ResourceCache.GetXmlFile("UI/ScreenJoystickMy.xml");
-			screenJoystickIndex = Input.AddScreenJoystick(layout, ResourceCache.GetXmlFile("UI/DefaultStyle.xml"));
+			var layout = ResourceCache.GetXmlFile(Assets.UI.myJoystick);
+			screenJoystickIndex = Input.AddScreenJoystick(layout, ResourceCache.GetXmlFile(Assets.UI.defaultStyle));
 			Input.SetScreenJoystickVisible(screenJoystickIndex, true);
 		}
 
@@ -217,9 +200,9 @@ namespace UrhoKosticky
 	
 
 			TouchEnabled = true;
-			var layout = ResourceCache.GetXmlFile("UI/ScreenJoystickMyNoMega.xml");
+			var layout = ResourceCache.GetXmlFile(Assets.UI.myJoystickNoMega);
 
-			screenJoystickIndex = Input.AddScreenJoystick(layout, ResourceCache.GetXmlFile("UI/DefaultStyle.xml"));
+			screenJoystickIndex = Input.AddScreenJoystick(layout, ResourceCache.GetXmlFile(Assets.UI.defaultStyle));
 			Input.SetScreenJoystickVisible(screenJoystickIndex, true);
 
 			Input.Update ();
@@ -227,6 +210,10 @@ namespace UrhoKosticky
 
 		void SimpleMoveCamera3D (float timeStep, float moveSpeed = 10.0f)
 		{
+			if (cameraMoving) {
+				return;
+			}
+
 			const float mouseSensitivity = .1f;
 
 			if (UI.FocusElement != null)
@@ -269,6 +256,10 @@ namespace UrhoKosticky
 
 		void MoveCameraByTouches (float timeStep)
 		{
+			if (cameraMoving) {
+				return;
+			}
+
 			if (!TouchEnabled || CameraNode == null)
 				return;
 
@@ -308,7 +299,7 @@ namespace UrhoKosticky
 				HorizontalAlignment = HorizontalAlignment.Center,
 				VerticalAlignment = VerticalAlignment.Center
 			};
-			textInstrukce.SetFont(ResourceCache.GetFont("Fonts/Anonymous Pro.ttf"), 20);
+			textInstrukce.SetFont(ResourceCache.GetFont(Assets.Fonts.Font), 20);
 			textInstrukce.SetColor(new Color(0f, 1f, 0f));
 			UI.Root.AddChild(textInstrukce);
 		}
@@ -321,7 +312,7 @@ namespace UrhoKosticky
 				HorizontalAlignment = HorizontalAlignment.Left,
 				VerticalAlignment = VerticalAlignment.Center
 			};
-			textboxesCount.SetFont(ResourceCache.GetFont("Fonts/Anonymous Pro.ttf"), 20);
+			textboxesCount.SetFont(ResourceCache.GetFont(Assets.Fonts.Font), 20);
 			textboxesCount.SetColor(new Color(0f, 1f, 0f));
 			UI.Root.AddChild(textboxesCount);
 		}
@@ -342,11 +333,7 @@ namespace UrhoKosticky
 
 			Node zoneNode = scene.CreateChild("Zone");
 			Zone zone = zoneNode.CreateComponent<Zone>();
-			zone.SetBoundingBox(new BoundingBox(-1000.0f, 1000.0f));
-			zone.AmbientColor=new Color(0.15f, 0.15f, 0.15f);
-			zone.FogColor=new Color(1.0f, 1.0f, 1.0f);
-			zone.FogStart=300.0f;
-			zone.FogEnd=500.0f;
+			zone.SetBoundingBox(new BoundingBox(-500.0f, 500.0f));
 
 			Node lightNode = scene.CreateChild("DirectionalLight");
 			lightNode.SetDirection(new Vector3(0.6f, -1.0f, 0.8f));
@@ -354,29 +341,23 @@ namespace UrhoKosticky
 			light.LightType=LightType.Directional;
 			light.CastShadows=true;
 			light.ShadowBias=new BiasParameters(0.00025f, 0.5f);
-
 			light.ShadowCascade=new CascadeParameters(10.0f, 50.0f, 200.0f, 0.0f, 0.8f);
-
 
 			Node skyNode = scene.CreateChild("Sky");
 			skyNode.SetScale(500.0f); // The scale actually does not matter
 			Skybox skybox = skyNode.CreateComponent<Skybox>();
-			skybox.Model=ResourceCache.GetModel("Models/Box.mdl");
-			skybox.SetMaterial(ResourceCache.GetMaterial("Materials/Skybox.xml"));
+			skybox.Model=ResourceCache.GetModel(Assets.Models.box);
+			skybox.SetMaterial(ResourceCache.GetMaterial("Materials/SkyboxSunSet.xml"));
 
-			{
-				Node floorNode = scene.CreateChild("Floor");
-				floorNode.Position=new Vector3(0.0f, -0.5f, 0.0f);
-				floorNode.Scale=new Vector3(1000.0f, 1.0f, 1000.0f);
-				StaticModel floorObject = floorNode.CreateComponent<StaticModel>();
-				floorObject.Model=ResourceCache.GetModel("Models/Box.mdl");
-				floorObject.SetMaterial(ResourceCache.GetMaterial("Materials/Terrain.xml"));
-
-
-				floorNode.CreateComponent<RigidBody>(); 
-				CollisionShape shape = floorNode.CreateComponent<CollisionShape>();
-				shape.SetBox(Vector3.One, Vector3.Zero, Quaternion.Identity);
-			}
+			Node floorNode = scene.CreateChild("Floor");
+			floorNode.Position=new Vector3(0.0f, -0.5f, 0.0f);
+			floorNode.Scale=new Vector3(500.0f, 1.0f, 500.0f);
+			StaticModel floorObject = floorNode.CreateComponent<StaticModel>();
+			floorObject.Model=ResourceCache.GetModel(Assets.Models.box);
+			floorObject.SetMaterial(ResourceCache.GetMaterial(Assets.Materials.terrain));
+			floorNode.CreateComponent<RigidBody>(); 
+			CollisionShape shape = floorNode.CreateComponent<CollisionShape>();
+			shape.SetBox(Vector3.One, Vector3.Zero, Quaternion.Identity);
 
 			for (int x = 0; x <= 14; x++) {
 				for (int y = 0; y <= 7; y++) {
@@ -402,8 +383,8 @@ namespace UrhoKosticky
 			Node boxNode = scene.CreateChild("Box");
 			boxNode.Position = position;
 			StaticModel boxObject = boxNode.CreateComponent<StaticModel>();
-			boxObject.Model=ResourceCache.GetModel("Models/Box.mdl");
-			boxObject.SetMaterial (matGray);
+			boxObject.Model=ResourceCache.GetModel(Assets.Models.box);
+			boxObject.SetMaterial (ResourceCache.GetMaterial (Assets.Materials.gray));
 			boxObject.CastShadows = true;
 			RigidBody body = boxNode.CreateComponent<RigidBody>();
 			body.Mass=1f;
@@ -438,17 +419,17 @@ namespace UrhoKosticky
 			boxNode.Rotation = CameraNode.Rotation;
 
 			if (mega) {
-				if (KostickyActivity.oVibrator!=null) {	KostickyActivity.oVibrator.Vibrate (500);}
+				if (KostickyActivity.oVibrator!=null) {	KostickyActivity.oVibrator.Vibrate (KostickyActivity.vibrateBig);}
 				boxNode.SetScale(3);
 			} else {
-				if (KostickyActivity.oVibrator!=null) {	KostickyActivity.oVibrator.Vibrate (50);}
+				if (KostickyActivity.oVibrator!=null) {	KostickyActivity.oVibrator.Vibrate (KostickyActivity.vibrateSmall);}
 				boxNode.SetScale(0.5f);
 			}
 
 
 			StaticModel boxModel = boxNode.CreateComponent<StaticModel>();
-			boxModel.Model = ResourceCache.GetModel("Models/Sphere.mdl");
-			boxModel.SetMaterial(ResourceCache.GetMaterial("Materials/StoneEnvMapSmall.xml"));
+			boxModel.Model = ResourceCache.GetModel(Assets.Models.sphere);
+			boxModel.SetMaterial(ResourceCache.GetMaterial(Assets.Materials.stone));
 			boxModel.CastShadows = true;
 
 			var body = boxNode.CreateComponent<RigidBody>();
@@ -500,7 +481,7 @@ namespace UrhoKosticky
 					returnBool = false;
 
 				} else {
-					item.GetComponent<StaticModel> ().SetMaterial(matOrange);
+					item.GetComponent<StaticModel> ().SetMaterial(ResourceCache.GetMaterial (Assets.Materials.orange));
 				}
 			}
 			textboxesCount.Value =  ("Zbývá zbořit"+Environment.NewLine+count+" kostiček.");
@@ -551,8 +532,11 @@ namespace UrhoKosticky
 		float stepYaw = 0;
 		float stepPitch = 0;
 
+		bool cameraMoving = false;
+
 		void moveCameraToFinal(Vector3 targetPosition,float targetPitch, float targetYaw)
 		{
+			cameraMoving = true;
 
 			if (!pitchedInPosition) {
 				if (!getPitchedteSteps) {
@@ -617,6 +601,7 @@ namespace UrhoKosticky
 				&& 	yawedInPosition == true
 				&& 	pitchedInPosition == true) {
 				idle = false;
+				cameraMoving = false;
 			}
 
 

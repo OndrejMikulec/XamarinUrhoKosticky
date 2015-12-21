@@ -23,6 +23,8 @@ namespace UrhoKosticky
 	public class KostickyActivity : Activity
 	{
 		public static Vibrator oVibrator;
+		public const int vibrateSmall = 20;
+		public const int vibrateBig = 50;
 
 		protected override void OnCreate (Bundle savedInstanceState)
 		{

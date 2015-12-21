@@ -32,7 +32,11 @@ namespace UrhoKosticky
 			};
 		}
 
-
+		//TODO: 			
+		/*Button quit = FindViewById<Button> (Resource.Id.buttonQuit);
+		quit.Click += delegate {
+			Finish();
+		};*/
 	}
 }
 
