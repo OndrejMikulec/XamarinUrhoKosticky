@@ -78,6 +78,12 @@
     <None Include="Assets\AboutAssets.txt" />
     <None Include="packages.config" />
     <None Include="UrhoSharpReadme.txt" />
+    <None Include="InGameImages\Screenshot_2015-12-21-19-38-58.jpg" />
+    <None Include="InGameImages\Screenshot_2015-12-21-19-39-11.jpg" />
+    <None Include="InGameImages\Screenshot_2015-12-21-19-39-46.jpg" />
+    <None Include="InGameImages\Screenshot_2015-12-21-19-39-58.jpg" />
+    <None Include="InGameImages\Screenshot_2015-12-21-19-40-41.jpg" />
+    <None Include="InGameImages\Screenshot_2015-12-21-19-40-47.jpg" />
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\layout\Main.axml" />
@@ -97,6 +103,7 @@
     <Folder Include="Assets\Data\Scenes\" />
     <Folder Include="Assets\Data\Sounds\" />
     <Folder Include="Assets\Data\Urho2D\" />
+    <Folder Include="InGameImages\" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
   <Import Project="..\packages\UrhoSharp.1.0.237\build\MonoAndroid\UrhoSharp.targets" Condition="Exists('..\packages\UrhoSharp.1.0.237\build\MonoAndroid\UrhoSharp.targets')" />

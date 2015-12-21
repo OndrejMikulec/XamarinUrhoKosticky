@@ -1,8 +1,8 @@
 ﻿<Properties StartupItem="UrhoKosticky\Happy New Year 2016.csproj">
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Release" PreferredExecutionTarget="Android.F5AZCY06E609" />
-  <MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="Android.Xamarin_Android_API_21" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="UrhoKosticky\Kosticky.cs">
     <Files>
-      <File FileName="UrhoKosticky\Kosticky.cs" Line="678" Column="40" />
+      <File FileName="UrhoKosticky\Kosticky.cs" Line="667" Column="4" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
