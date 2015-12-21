@@ -1,5 +1,7 @@
 C:\Users\Ondra\Documents\Projects\UrhoKosticky\UrhoKosticky\bin\Debug\UrhoKosticky.dll
 C:\Users\Ondra\Documents\Projects\UrhoKosticky\UrhoKosticky\bin\Debug\UrhoKosticky.pdb
+C:\Users\Ondra\Documents\Projects\UrhoKosticky\UrhoKosticky\bin\Debug\com.ondrejmikulec.hny2016game.apk
+C:\Users\Ondra\Documents\Projects\UrhoKosticky\UrhoKosticky\bin\Debug\com.ondrejmikulec.hny2016game-Signed.apk
 C:\Users\Ondra\Documents\Projects\UrhoKosticky\UrhoKosticky\bin\Debug\Urho.dll
 C:\Users\Ondra\Documents\Projects\UrhoKosticky\UrhoKosticky\bin\Debug\Urho.Droid.dll
 C:\Users\Ondra\Documents\Projects\UrhoKosticky\UrhoKosticky\bin\Debug\Urho.Droid.SdlBindings.dll
@@ -9,8 +11,10 @@ C:\Users\Ondra\Documents\Projects\UrhoKosticky\UrhoKosticky\bin\Debug\Xamarin.An
 C:\Users\Ondra\Documents\Projects\UrhoKosticky\UrhoKosticky\bin\Debug\Urho.xml
 C:\Users\Ondra\Documents\Projects\UrhoKosticky\UrhoKosticky\bin\Debug\Urho.Droid.xml
 C:\Users\Ondra\Documents\Projects\UrhoKosticky\UrhoKosticky\bin\Debug\Urho.Droid.SdlBindings.xml
+C:\Users\Ondra\Documents\Projects\UrhoKosticky\UrhoKosticky\obj\Debug\UrhoKosticky.csprojResolveAssemblyReference.cache
 C:\Users\Ondra\Documents\Projects\UrhoKosticky\UrhoKosticky\obj\Debug\UrhoKosticky.dll
 C:\Users\Ondra\Documents\Projects\UrhoKosticky\UrhoKosticky\obj\Debug\UrhoKosticky.pdb
+C:\Users\Ondra\Documents\Projects\UrhoKosticky\UrhoKosticky\obj\Debug\android\bin\com.ondrejmikulec.hny2016game.apk
 C:\Users\Ondra\Documents\Projects\UrhoKosticky\UrhoKosticky\obj\Debug\res\layout\main.xml
 C:\Users\Ondra\Documents\Projects\UrhoKosticky\UrhoKosticky\obj\Debug\res\values\strings.xml
 C:\Users\Ondra\Documents\Projects\UrhoKosticky\UrhoKosticky\obj\Debug\res\mipmap-hdpi\icon.png
@@ -18,10 +22,6 @@ C:\Users\Ondra\Documents\Projects\UrhoKosticky\UrhoKosticky\obj\Debug\res\mipmap
 C:\Users\Ondra\Documents\Projects\UrhoKosticky\UrhoKosticky\obj\Debug\res\mipmap-xhdpi\icon.png
 C:\Users\Ondra\Documents\Projects\UrhoKosticky\UrhoKosticky\obj\Debug\res\mipmap-xxhdpi\icon.png
 C:\Users\Ondra\Documents\Projects\UrhoKosticky\UrhoKosticky\obj\Debug\res\mipmap-xxxhdpi\icon.png
+C:\Users\Ondra\Documents\Projects\UrhoKosticky\UrhoKosticky\obj\Debug\res\layout\about.xml
 C:\Users\Ondra\Documents\Projects\UrhoKosticky\UrhoKosticky\obj\Debug\R.cs.flag
 C:\Users\Ondra\Documents\Projects\UrhoKosticky\UrhoKosticky\obj\Debug\uploadflags.txt
-C:\Users\Ondra\Documents\Projects\UrhoKosticky\UrhoKosticky\obj\Debug\UrhoKosticky.csprojResolveAssemblyReference.cache
-C:\Users\Ondra\Documents\Projects\UrhoKosticky\UrhoKosticky\obj\Debug\res\layout\about.xml
-C:\Users\Ondra\Documents\Projects\UrhoKosticky\UrhoKosticky\bin\Debug\com.ondrejmikulec.hny2016game.apk
-C:\Users\Ondra\Documents\Projects\UrhoKosticky\UrhoKosticky\bin\Debug\com.ondrejmikulec.hny2016game-Signed.apk
-C:\Users\Ondra\Documents\Projects\UrhoKosticky\UrhoKosticky\obj\Debug\android\bin\com.ondrejmikulec.hny2016game.apk

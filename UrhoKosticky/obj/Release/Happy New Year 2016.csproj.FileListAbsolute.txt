@@ -1,0 +1,27 @@
+C:\Users\Ondra\Documents\Projects\UrhoKosticky\UrhoKosticky\bin\Release\UrhoKosticky.dll
+C:\Users\Ondra\Documents\Projects\UrhoKosticky\UrhoKosticky\bin\Release\UrhoKosticky.pdb
+C:\Users\Ondra\Documents\Projects\UrhoKosticky\UrhoKosticky\bin\Release\com.ondrejmikulec.hny2016game.apk
+C:\Users\Ondra\Documents\Projects\UrhoKosticky\UrhoKosticky\bin\Release\com.ondrejmikulec.hny2016game-Signed.apk
+C:\Users\Ondra\Documents\Projects\UrhoKosticky\UrhoKosticky\bin\Release\Urho.dll
+C:\Users\Ondra\Documents\Projects\UrhoKosticky\UrhoKosticky\bin\Release\Urho.Droid.dll
+C:\Users\Ondra\Documents\Projects\UrhoKosticky\UrhoKosticky\bin\Release\Urho.Droid.SdlBindings.dll
+C:\Users\Ondra\Documents\Projects\UrhoKosticky\UrhoKosticky\bin\Release\Xamarin.Android.Support.v13.dll
+C:\Users\Ondra\Documents\Projects\UrhoKosticky\UrhoKosticky\bin\Release\Xamarin.Android.Support.v4.dll
+C:\Users\Ondra\Documents\Projects\UrhoKosticky\UrhoKosticky\bin\Release\Xamarin.Android.Support.v7.AppCompat.dll
+C:\Users\Ondra\Documents\Projects\UrhoKosticky\UrhoKosticky\bin\Release\Urho.xml
+C:\Users\Ondra\Documents\Projects\UrhoKosticky\UrhoKosticky\bin\Release\Urho.Droid.xml
+C:\Users\Ondra\Documents\Projects\UrhoKosticky\UrhoKosticky\bin\Release\Urho.Droid.SdlBindings.xml
+C:\Users\Ondra\Documents\Projects\UrhoKosticky\UrhoKosticky\obj\Release\Happy New Year 2016.csprojResolveAssemblyReference.cache
+C:\Users\Ondra\Documents\Projects\UrhoKosticky\UrhoKosticky\obj\Release\UrhoKosticky.dll
+C:\Users\Ondra\Documents\Projects\UrhoKosticky\UrhoKosticky\obj\Release\UrhoKosticky.pdb
+C:\Users\Ondra\Documents\Projects\UrhoKosticky\UrhoKosticky\obj\Release\android\bin\com.ondrejmikulec.hny2016game.apk
+C:\Users\Ondra\Documents\Projects\UrhoKosticky\UrhoKosticky\obj\Release\res\layout\main.xml
+C:\Users\Ondra\Documents\Projects\UrhoKosticky\UrhoKosticky\obj\Release\res\values\strings.xml
+C:\Users\Ondra\Documents\Projects\UrhoKosticky\UrhoKosticky\obj\Release\res\mipmap-hdpi\icon.png
+C:\Users\Ondra\Documents\Projects\UrhoKosticky\UrhoKosticky\obj\Release\res\mipmap-mdpi\icon.png
+C:\Users\Ondra\Documents\Projects\UrhoKosticky\UrhoKosticky\obj\Release\res\mipmap-xhdpi\icon.png
+C:\Users\Ondra\Documents\Projects\UrhoKosticky\UrhoKosticky\obj\Release\res\mipmap-xxhdpi\icon.png
+C:\Users\Ondra\Documents\Projects\UrhoKosticky\UrhoKosticky\obj\Release\res\mipmap-xxxhdpi\icon.png
+C:\Users\Ondra\Documents\Projects\UrhoKosticky\UrhoKosticky\obj\Release\res\layout\about.xml
+C:\Users\Ondra\Documents\Projects\UrhoKosticky\UrhoKosticky\obj\Release\R.cs.flag
+C:\Users\Ondra\Documents\Projects\UrhoKosticky\UrhoKosticky\obj\Release\uploadflags.txt

@@ -41,7 +41,7 @@ namespace UrhoKosticky
 			Button buttonQuit = FindViewById<Button> (Resource.Id.buttonQuit);
 			buttonQuit.Click += delegate {
 
-				Finish();
+				Finish ();
 
 			};
 		}

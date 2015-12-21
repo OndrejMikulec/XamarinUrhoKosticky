@@ -1084,6 +1084,10 @@ containing a value of this type.
         public static int activity_chooser_view_content=0x7f0a0025;
         public static int always=0x7f0a000f;
         public static int beginning=0x7f0a0016;
+        public static int buttonAbout=0x7f0a003f;
+        public static int buttonBack=0x7f0a003c;
+        public static int buttonQuit=0x7f0a0040;
+        public static int buttonStart=0x7f0a003e;
         public static int checkbox=0x7f0a002d;
         public static int collapseActionView=0x7f0a0010;
         public static int default_activity_button=0x7f0a0028;
@@ -1102,7 +1106,6 @@ containing a value of this type.
         public static int listMode=0x7f0a0006;
         public static int list_item=0x7f0a0029;
         public static int middle=0x7f0a0018;
-        public static int myButton=0x7f0a003c;
         public static int never=0x7f0a0012;
         public static int none=0x7f0a0019;
         public static int normal=0x7f0a0007;
@@ -1126,6 +1129,7 @@ containing a value of this type.
         public static int split_action_bar=0x7f0a001e;
         public static int submit_area=0x7f0a0039;
         public static int tabMode=0x7f0a0008;
+        public static int textView1=0x7f0a003d;
         public static int title=0x7f0a002b;
         public static int top_action_bar=0x7f0a0020;
         public static int up=0x7f0a0021;
@@ -1182,8 +1186,9 @@ containing a value of this type.
         public static int abc_search_dropdown_item_icons_2line=0x7f040015;
         public static int abc_search_view=0x7f040016;
         public static int abc_simple_decor=0x7f040017;
-        public static int main=0x7f040018;
-        public static int support_simple_spinner_dropdown_item=0x7f040019;
+        public static int about=0x7f040018;
+        public static int main=0x7f040019;
+        public static int support_simple_spinner_dropdown_item=0x7f04001a;
     }
     public static final class mipmap {
         public static int icon=0x7f030000;

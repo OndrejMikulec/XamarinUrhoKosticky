@@ -59,7 +59,7 @@
         <attribute name="Name" value="Hat0"/>
         <element type="Text">
             <attribute name="Name" value="KeyBinding" />
-            <attribute name="Text" value="WSAD" />
+            <attribute name="Text" value="TGFH" />
         </element>
         <attribute name="Position" value="12 -76" />
         <attribute name="Size" value="96 96" />

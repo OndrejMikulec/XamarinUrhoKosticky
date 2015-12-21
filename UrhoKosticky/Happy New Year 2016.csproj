@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectTypeGuids>{EFBA0AD7-5A72-4C68-AF49-83D382785DCF};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <ProjectGuid>{A3222BB7-A941-4269-A77D-178912C2D7D5}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <RootNamespace>UrhoKosticky</RootNamespace>
+    <AndroidApplication>True</AndroidApplication>
+    <AndroidResgenFile>Resources\Resource.designer.cs</AndroidResgenFile>
+    <AndroidResgenClass>Resource</AndroidResgenClass>
+    <AndroidManifest>Properties\AndroidManifest.xml</AndroidManifest>
+    <MonoAndroidResourcePrefix>Resources</MonoAndroidResourcePrefix>
+    <MonoAndroidAssetsPrefix>Assets</MonoAndroidAssetsPrefix>
+    <AndroidUseLatestPlatformSdk>False</AndroidUseLatestPlatformSdk>
+    <AssemblyName>UrhoKosticky</AssemblyName>
+    <TargetFrameworkVersion>v4.4</TargetFrameworkVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug</OutputPath>
+    <DefineConstants>DEBUG;</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <ConsolePause>false</ConsolePause>
+    <AndroidLinkMode>None</AndroidLinkMode>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>full</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release</OutputPath>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <ConsolePause>false</ConsolePause>
+    <AndroidUseSharedRuntime>false</AndroidUseSharedRuntime>
+    <EnableProguard>true</EnableProguard>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Core" />
+    <Reference Include="Mono.Android" />
+    <Reference Include="Xamarin.Android.Support.v13">
+      <HintPath>..\packages\Xamarin.Android.Support.v13.20.0.0.4\lib\MonoAndroid32\Xamarin.Android.Support.v13.dll</HintPath>
+    </Reference>
+    <Reference Include="Xamarin.Android.Support.v4">
+      <HintPath>..\packages\Xamarin.Android.Support.v4.20.0.0.4\lib\MonoAndroid32\Xamarin.Android.Support.v4.dll</HintPath>
+    </Reference>
+    <Reference Include="Xamarin.Android.Support.v7.AppCompat">
+      <HintPath>..\packages\Xamarin.Android.Support.v7.AppCompat.20.0.0.2\lib\MonoAndroid10\Xamarin.Android.Support.v7.AppCompat.dll</HintPath>
+    </Reference>
+    <Reference Include="Urho">
+      <HintPath>..\packages\UrhoSharp.1.0.237\lib\MonoAndroid\Urho.dll</HintPath>
+    </Reference>
+    <Reference Include="Urho.Droid">
+      <HintPath>..\packages\UrhoSharp.1.0.237\lib\MonoAndroid\Urho.Droid.dll</HintPath>
+    </Reference>
+    <Reference Include="Urho.Droid.SdlBindings">
+      <HintPath>..\packages\UrhoSharp.1.0.237\lib\MonoAndroid\Urho.Droid.SdlBindings.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="MainActivity.cs" />
+    <Compile Include="Resources\Resource.designer.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="KostickyActivity.cs" />
+    <Compile Include="boxColorSchemas.cs" />
+    <Compile Include="Kosticky.cs" />
+    <Compile Include="Assets.cs" />
+    <Compile Include="About.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\AboutResources.txt" />
+    <None Include="Properties\AndroidManifest.xml" />
+    <None Include="Assets\AboutAssets.txt" />
+    <None Include="packages.config" />
+    <None Include="UrhoSharpReadme.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\layout\Main.axml" />
+    <AndroidResource Include="Resources\values\Strings.xml" />
+    <AndroidResource Include="Resources\mipmap-hdpi\Icon.png" />
+    <AndroidResource Include="Resources\mipmap-mdpi\Icon.png" />
+    <AndroidResource Include="Resources\mipmap-xhdpi\Icon.png" />
+    <AndroidResource Include="Resources\mipmap-xxhdpi\Icon.png" />
+    <AndroidResource Include="Resources\mipmap-xxxhdpi\Icon.png" />
+    <AndroidResource Include="Resources\layout\About.axml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Resources\drawable\" />
+    <Folder Include="Assets\Data\Music\" />
+    <Folder Include="Assets\Data\Objects\" />
+    <Folder Include="Assets\Data\Particle\" />
+    <Folder Include="Assets\Data\Scenes\" />
+    <Folder Include="Assets\Data\Sounds\" />
+    <Folder Include="Assets\Data\Urho2D\" />
+  </ItemGroup>
+  <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
+  <Import Project="..\packages\UrhoSharp.1.0.237\build\MonoAndroid\UrhoSharp.targets" Condition="Exists('..\packages\UrhoSharp.1.0.237\build\MonoAndroid\UrhoSharp.targets')" />
+  <ItemGroup>
+    <AndroidAsset Include="Assets\Data\Fonts\Anonymous Pro.png" />
+    <AndroidAsset Include="Assets\Data\Fonts\Anonymous Pro.sdf" />
+    <AndroidAsset Include="Assets\Data\Fonts\Anonymous Pro.ttf" />
+    <AndroidAsset Include="Assets\Data\Fonts\OFL.txt" />
+    <AndroidAsset Include="Assets\Data\Fonts\read_me.html" />
+    <AndroidAsset Include="Assets\Data\Materials\Terrain.xml" />
+    <AndroidAsset Include="Assets\Data\Models\Box.mdl" />
+    <AndroidAsset Include="Assets\Data\Models\Plane.mdl" />
+    <AndroidAsset Include="Assets\Data\Models\Sphere.mdl" />
+    <AndroidAsset Include="Assets\Data\PostProcess\AutoExposure.xml" />
+    <AndroidAsset Include="Assets\Data\PostProcess\Bloom.xml" />
+    <AndroidAsset Include="Assets\Data\PostProcess\BloomHDR.xml" />
+    <AndroidAsset Include="Assets\Data\PostProcess\Blur.xml" />
+    <AndroidAsset Include="Assets\Data\PostProcess\ColorCorrection.xml" />
+    <AndroidAsset Include="Assets\Data\PostProcess\FXAA2.xml" />
+    <AndroidAsset Include="Assets\Data\PostProcess\FXAA3.xml" />
+    <AndroidAsset Include="Assets\Data\PostProcess\GammaCorrection.xml" />
+    <AndroidAsset Include="Assets\Data\PostProcess\GreyScale.xml" />
+    <AndroidAsset Include="Assets\Data\PostProcess\Tonemap.xml" />
+    <AndroidAsset Include="Assets\Data\Textures\TerrainDetail1.dds" />
+    <AndroidAsset Include="Assets\Data\Textures\TerrainDetail2.dds" />
+    <AndroidAsset Include="Assets\Data\Textures\TerrainDetail3.dds" />
+    <AndroidAsset Include="Assets\Data\Textures\TerrainWeights.dds" />
+    <AndroidAsset Include="Assets\Data\Textures\TouchInput.png" />
+    <AndroidAsset Include="Assets\Data\Textures\UrhoDecal.dds" />
+    <AndroidAsset Include="Assets\Data\Textures\UrhoDecalAlpha.dds" />
+    <AndroidAsset Include="Assets\Data\Materials\M_0039_DarkOrange.xml" />
+    <AndroidAsset Include="Assets\Data\Materials\M_0020_Red.xml" />
+    <AndroidAsset Include="Assets\Data\Materials\M_0056_Yellow.xml" />
+    <AndroidAsset Include="Assets\Data\Materials\M_0060_GrassGreen.xml" />
+    <AndroidAsset Include="Assets\Data\Materials\M_0103_Blue.xml" />
+    <AndroidAsset Include="Assets\Data\Materials\M_0132_LightGray.xml" />
+    <AndroidAsset Include="Assets\Data\UI\DefaultStyle.xml" />
+    <AndroidAsset Include="Assets\Data\Materials\StoneEnvMapSmall.xml" />
+    <AndroidAsset Include="Assets\Data\Textures\StoneDiffuse.dds" />
+    <AndroidAsset Include="Assets\Data\UI\ScreenJoystickMy.xml" />
+    <AndroidAsset Include="Assets\Data\UI\ScreenJoystickMyNoMega.xml" />
+    <AndroidAsset Include="Assets\Data\Textures\SkyboxSunSet.xml" />
+    <AndroidAsset Include="Assets\Data\Materials\SkyboxSunSet.xml" />
+    <AndroidAsset Include="Assets\Data\Textures\SunSetBack1024.dds" />
+    <AndroidAsset Include="Assets\Data\Textures\SunSetDown1024.dds" />
+    <AndroidAsset Include="Assets\Data\Textures\SunSetFront1024.dds" />
+    <AndroidAsset Include="Assets\Data\Textures\SunSetLeft1024.dds" />
+    <AndroidAsset Include="Assets\Data\Textures\SunSetRight1024.dds" />
+    <AndroidAsset Include="Assets\Data\Textures\SunSetUp1024.dds" />
+  </ItemGroup>
+</Project>

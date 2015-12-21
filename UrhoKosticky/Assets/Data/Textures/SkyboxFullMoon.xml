@@ -1,9 +1,0 @@
-<cubemap>
-    <face name="FullMoonRight1024.dds" />
-    <face name="FullMoonLeft1024.dds" />
-    <face name="FullMoonUp1024.dds" />
-    <face name="FullMoonDown1024.dds" />
-    <face name="FullMoonBack1024.dds" />
-    <face name="FullMoonFront1024.dds" />
-    <quality low="0" />
-</cubemap>

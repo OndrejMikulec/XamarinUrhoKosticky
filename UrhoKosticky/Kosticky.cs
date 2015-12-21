@@ -36,7 +36,8 @@ namespace UrhoKosticky
 		Scene myScene;
 		Node myCameraNode;
 		Skybox mySkybox;
-		Light myLight;
+		Light myLightDay;
+
 
 		float Yaw { get; set; }
 		float Pitch { get; set; }
@@ -45,10 +46,8 @@ namespace UrhoKosticky
 		const float TouchSensitivity = 2.5f;
 		const float PixelSize = 0.01f;
 
-		Text textInstrukce;
+		Text screenText;
 		Text textboxesCount;
-		Timer nabijeni;
-		bool nabito = true;
 
 		List<Node> boxesNodesList = new List<Node> ();
 		List<Node> ballNodesList = new List<Node> ();
@@ -83,11 +82,6 @@ namespace UrhoKosticky
 						
 			Graphics.WindowTitle = "Happy New Year 2016";
 
-			nabijeni = new Timer (500);
-			nabijeni.Elapsed += delegate {
-				nabito = true;
-			};
-
 			base.Start();
 			CreateScene();
 			SetupViewport();
@@ -118,6 +112,7 @@ namespace UrhoKosticky
 
 				} else if (gameStateNow > 100 && gameStateNow < 350 ){
 					cameraMoving = true;
+
 					moveCameraToFinal (cameraStartPosition,0,0);
 
 				}  else if (gameStateNow == 350){
@@ -127,12 +122,14 @@ namespace UrhoKosticky
 					removeCollision (ballNodesList);
 					ballNodesList.Clear ();
 					gameStatesForNewBoxes = buildListOfGameStates(gameStateNow+1, 10, 15*8) ;
-					changeSkyBox ();
+
 
 				} else if (gameStatesForNewBoxes!=null && gameStateNow >= gameStatesForNewBoxes[0] && gameStateNow <= gameStatesForNewBoxes[gameStatesForNewBoxes.Count-1]){
 					if (gameStatesForNewBoxes.Contains (gameStateNow)) {
 						createBoxAndAddToList (new Vector3 (0f, 50f, 0f));
 					}
+
+					settingNight();
 
 				} else if (gameStatesForNewBoxes!=null && gameStateNow==gameStatesForNewBoxes[gameStatesForNewBoxes.Count-1]+300) {
 					removeCollision (boxesNodesList);
@@ -142,7 +139,7 @@ namespace UrhoKosticky
 
 				} else if (gameStateNow==gameStateTemp+1) {
 					setCollision (boxesNodesList);
-
+					seConstructionLight ();
 				} else if (gameStateNow==gameStateTemp+100) {
 					KostickyActivity.oVibrator.Vibrate (KostickyActivity.vibrateSmall);
 					colorBoxesBySchema (BoxColorSchemas.boxes2 (-5,2),matRandomizer());
@@ -189,33 +186,41 @@ namespace UrhoKosticky
 			gameStateNow = 0;
 		}
 
-		int screenJoystickIndex;
+		int screenJoystick1Index = 0;
+		int screenJoystick2Index = 0;
 		void initControls()
 		{
 			TouchEnabled = true;
 
 			var layout = ResourceCache.GetXmlFile(Assets.UI.myJoystick);
-			screenJoystickIndex = Input.AddScreenJoystick(layout, ResourceCache.GetXmlFile(Assets.UI.defaultStyle));
-			Input.SetScreenJoystickVisible(screenJoystickIndex, true);
+			screenJoystick1Index = Input.AddScreenJoystick(layout, ResourceCache.GetXmlFile(Assets.UI.defaultStyle));
+			Input.SetScreenJoystickVisible(screenJoystick1Index, true);
 		}
 
+		//alternative solution
+		//screen joysticks swap
+		//KeyDown event froze in action -> joysticks needs different keys
 		void hideMegaButton ()
 		{
+			Input.RemoveScreenJoystick (screenJoystick1Index);
 
-			Input.RemoveScreenJoystick (screenJoystickIndex);
-	
 
 			TouchEnabled = true;
 			var layout = ResourceCache.GetXmlFile(Assets.UI.myJoystickNoMega);
 
-			screenJoystickIndex = Input.AddScreenJoystick(layout, ResourceCache.GetXmlFile(Assets.UI.defaultStyle));
-			Input.SetScreenJoystickVisible(screenJoystickIndex, true);
+			screenJoystick2Index = Input.AddScreenJoystick(layout, ResourceCache.GetXmlFile(Assets.UI.defaultStyle));
+			Input.SetScreenJoystickVisible(screenJoystick1Index, true);
 
-			Input.Update ();
 		}
 
 		void SimpleMoveCamera3D (float timeStep, float moveSpeed = 10.0f)
 		{
+			
+
+			if (!TouchEnabled) {
+				return;
+			}
+
 			if (cameraMoving) {
 				return;
 			}
@@ -233,27 +238,28 @@ namespace UrhoKosticky
 			myCameraNode.Rotation = new Quaternion(Pitch, Yaw, 0);
 
 
-			if (Input.GetKeyDown (Key.W)) myCameraNode.Translate ( Vector3.UnitZ * moveSpeed * timeStep);
-			if (Input.GetKeyDown (Key.S)) myCameraNode.Translate (-Vector3.UnitZ * moveSpeed * timeStep);
-			if (Input.GetKeyDown (Key.A)) myCameraNode.Translate (-Vector3.UnitX * moveSpeed * timeStep);
-			if (Input.GetKeyDown (Key.D)) myCameraNode.Translate ( Vector3.UnitX * moveSpeed * timeStep);
+			if (Input.GetKeyDown (Key.W)&&screenJoystick2Index == 0) myCameraNode.Translate ( Vector3.UnitZ * moveSpeed * timeStep);
+			if (Input.GetKeyDown (Key.S)&&screenJoystick2Index == 0) myCameraNode.Translate (-Vector3.UnitZ * moveSpeed * timeStep);
+			if (Input.GetKeyDown (Key.A)&&screenJoystick2Index == 0) myCameraNode.Translate (-Vector3.UnitX * moveSpeed * timeStep);
+			if (Input.GetKeyDown (Key.D)&&screenJoystick2Index == 0) myCameraNode.Translate ( Vector3.UnitX * moveSpeed * timeStep);
+
+			if (Input.GetKeyDown (Key.T)) myCameraNode.Translate ( Vector3.UnitZ * moveSpeed * timeStep);
+			if (Input.GetKeyDown (Key.G)) myCameraNode.Translate (-Vector3.UnitZ * moveSpeed * timeStep);
+			if (Input.GetKeyDown (Key.F)) myCameraNode.Translate (-Vector3.UnitX * moveSpeed * timeStep);
+			if (Input.GetKeyDown (Key.H)) myCameraNode.Translate ( Vector3.UnitX * moveSpeed * timeStep);
+
 			if (Input.GetKeyPress (Key.Space)||Input.GetKeyPress (Key.M)) {
-				textInstrukce.Value = "";
-				if (nabito) {
-					nabito = false;
-					if (Input.GetKeyPress (Key.M)) {
-						SpawnObject (true);
-						hideMegaButton ();
-					} else {
-						SpawnObject (false);
-					}
+				screenText.Value = "";
 
-					nabijeni.Start ();
+				if (Input.GetKeyPress (Key.M)) {
+					SpawnObject (true);
+					hideMegaButton ();
+				} else {
+					SpawnObject (false);
+				}
 
-					if (textInstrukce.Value != null) {
-						textInstrukce.Value = null;
-					}
-
+				if (screenText.Value != null) {
+					screenText.Value = null;
 				}
 			}
 
@@ -262,6 +268,11 @@ namespace UrhoKosticky
 
 		void MoveCameraByTouches (float timeStep)
 		{
+
+			if (!TouchEnabled) {
+				return;
+			}
+
 			if (cameraMoving) {
 				return;
 			}
@@ -299,15 +310,15 @@ namespace UrhoKosticky
 
 		void initInstructionsText(string text = "")
 		{
-			textInstrukce = new Text()
+			screenText = new Text()
 			{
 				Value = text,
 				HorizontalAlignment = HorizontalAlignment.Center,
 				VerticalAlignment = VerticalAlignment.Center
 			};
-			textInstrukce.SetFont(ResourceCache.GetFont(Assets.Fonts.Font), 20);
-			textInstrukce.SetColor(new Color(0f, 1f, 0f));
-			UI.Root.AddChild(textInstrukce);
+			screenText.SetFont(ResourceCache.GetFont(Assets.Fonts.Font), 20);
+			screenText.SetColor(new Color(0f, 1f, 0f));
+			UI.Root.AddChild(screenText);
 		}
 
 		void initBoxesCountText(string text = "")
@@ -343,11 +354,11 @@ namespace UrhoKosticky
 
 			Node lightNode = myScene.CreateChild("DirectionalLight");
 			lightNode.SetDirection(new Vector3(0.6f, -1.0f, 0.8f));
-			myLight = lightNode.CreateComponent<Light>();
-			myLight.LightType=LightType.Directional;
-			myLight.CastShadows=true;
-			myLight.ShadowBias=new BiasParameters(0.00025f, 0.5f);
-			myLight.ShadowCascade=new CascadeParameters(10.0f, 50.0f, 200.0f, 0.0f, 0.8f);
+			myLightDay = lightNode.CreateComponent<Light>();
+			myLightDay.LightType=LightType.Directional;
+			myLightDay.CastShadows=true;
+			myLightDay.ShadowBias=new BiasParameters(0.00025f, 0.5f);
+			myLightDay.ShadowCascade=new CascadeParameters(10.0f, 50.0f, 200.0f, 0.0f, 0.8f);
 
 
 			Node skyNode = myScene.CreateChild("Sky");
@@ -501,15 +512,15 @@ namespace UrhoKosticky
 			Random dir = new Random ();
 
 			foreach (Node item in boxesNodesList) {
-				endMove (item,dir);
+				endCleaning (item,dir);
 			}
 
 			foreach (Node item in ballNodesList) {
-				endMove (item,dir);
+				endCleaning (item,dir);
 			}				
 		}
 
-		void endMove(Node item,Random dir )
+		void endCleaning(Node item,Random dir )
 		{
 			StringHash oStringHash = new StringHash (RigidBody.TypeStatic.Code);
 
@@ -608,6 +619,7 @@ namespace UrhoKosticky
 				&& 	yawedInPosition
 				&& 	pitchedInPosition) {
 				idle = false;
+
 				cameraMoving = false;
 			}
 
@@ -651,14 +663,25 @@ namespace UrhoKosticky
 			}
 		}
 
-		void changeSkyBox()
+		void settingNight()
 		{
-			mySkybox.SetMaterial(ResourceCache.GetMaterial(Assets.Materials.skyBoxFullMoon));
+			myLightDay.Brightness -= 0.001f;
+		}
+
+		Light lightConst;
+		void seConstructionLight()
+		{
+			Node lightNode = myScene.CreateChild("PointLight");
+			lightConst = lightNode.CreateComponent<Light>();
+			lightConst.LightType = LightType.Point;
+			lightConst.Range = (10.0f);
+			lightNode.Position  = new Vector3 (0.0f, 5.0f, -2.0f);
 		}
 
 		void setFinalLights()
 		{
-			myLight.Enabled = false;
+			myLightDay.Enabled = false;
+			lightConst.Enabled = false;
 
 			Node lightNode = myScene.CreateChild("PointLight");
 			Light light = lightNode.CreateComponent<Light>();
@@ -666,7 +689,6 @@ namespace UrhoKosticky
 			light.Range = (10.0f);
 
 			ObjectAnimation lightAnimation=new ObjectAnimation();
-
 
 			ValueAnimation positionAnimation=new ValueAnimation();
 			positionAnimation.InterpolationMethod= InterpMethod.Spline;

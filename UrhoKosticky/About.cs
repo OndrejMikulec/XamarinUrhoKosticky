@@ -35,12 +35,12 @@ namespace UrhoKosticky
 			text.Text = @"
 This is absolutely free open code application!
 You can find the source code at: https://github.com/OndrejMikulec/XamarinUrhoKosticky
-Application uses parts code of: https://github.com/xamarin/urho-samples
+Application compiled with parts of code from: https://github.com/xamarin/urho-samples
 Sky box textures are from:  https://93i.de/p/free-skybox-texture-set/ created by Heiko Irrgang.
 Developed with Xamarin INDIE software. https://xamarin.com/
 Developed with Urho3D game engine: http://urho3d.github.io/
 
-Author: Ondrej Mikulec, Vsetin, Czech Republic.
+Author: Ondrej Mikulec,
 		https://github.com/OndrejMikulec/";
 		}
 	}
