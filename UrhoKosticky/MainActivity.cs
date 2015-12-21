@@ -8,9 +8,9 @@ using Urho.Droid;
 
 namespace UrhoKosticky
 {
-	[Activity (Label = "UrhoKosticky", MainLauncher = true, Icon = "@mipmap/icon",
-		ConfigurationChanges = ConfigChanges.KeyboardHidden | ConfigChanges.Orientation,
-		ScreenOrientation = ScreenOrientation.Portrait)]
+	[Activity (Label = "Happy New Year 2016", MainLauncher = true, Icon = "@mipmap/icon",
+		ConfigurationChanges = ConfigChanges.KeyboardHidden | ConfigChanges.Orientation/*,
+		ScreenOrientation = ScreenOrientation.Portrait*/)]
 	public class MainActivity : Activity
 	{
 
@@ -23,20 +23,29 @@ namespace UrhoKosticky
 
 			// Get our button from the layout resource,
 			// and attach an event to it
-			Button button = FindViewById<Button> (Resource.Id.myButton);
-
+			Button button = FindViewById<Button> (Resource.Id.buttonStart);
 			button.Click += delegate {
 
 				StartActivity(typeof(KostickyActivity));
 
 			};
+
+			Button buttonAbout = FindViewById<Button> (Resource.Id.buttonAbout);
+			buttonAbout.Click += delegate {
+
+				StartActivity(typeof(About));
+
+			};
+
+
+			Button buttonQuit = FindViewById<Button> (Resource.Id.buttonQuit);
+			buttonQuit.Click += delegate {
+
+				Finish();
+
+			};
 		}
 
-		//TODO: 			
-		/*Button quit = FindViewById<Button> (Resource.Id.buttonQuit);
-		quit.Click += delegate {
-			Finish();
-		};*/
 	}
 }
 

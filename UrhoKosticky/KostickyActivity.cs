@@ -17,7 +17,7 @@ using Urho.Droid;
 
 namespace UrhoKosticky
 {
-	[Activity (Label = "KostickyActivity",
+	[Activity (Label = "Happy New Year 2016",
 		ConfigurationChanges = ConfigChanges.KeyboardHidden | ConfigChanges.Orientation,
 		ScreenOrientation = ScreenOrientation.Landscape)]
 	public class KostickyActivity : Activity

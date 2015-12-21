@@ -1,13 +1,12 @@
 ﻿<Properties StartupItem="UrhoKosticky\UrhoKosticky.csproj">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Release" PreferredExecutionTarget="Android.F5AZCY06E609" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="UrhoKosticky\Kosticky.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="UrhoKosticky\About.cs">
     <Files>
-      <File FileName="UrhoKosticky\MainActivity.cs" Line="36" Column="65" />
-      <File FileName="UrhoKosticky\KostickyActivity.cs" Line="1" Column="1" />
-      <File FileName="UrhoKosticky\Kosticky.cs" Line="178" Column="3" />
-      <File FileName="UrhoKosticky\Assets\Data\Textures\SkyboxSunSet.xml" Line="7" Column="40" />
-      <File FileName="UrhoKosticky\Assets.cs" Line="40" Column="69" />
-      <File FileName="UrhoKosticky\Assets\Data\Textures\SkyboxFullMoon.xml" Line="7" Column="42" />
+      <File FileName="UrhoKosticky\MainActivity.cs" Line="8" Column="1" />
+      <File FileName="UrhoKosticky\About.cs" Line="12" Column="22" />
+      <File FileName="UrhoKosticky\KostickyActivity.cs" Line="20" Column="22" />
+      <File FileName="UrhoKosticky\Kosticky.cs" Line="89" Column="6" />
+      <File FileName="UrhoKosticky\Properties\AssemblyInfo.cs" Line="9" Column="38" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

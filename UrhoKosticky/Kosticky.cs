@@ -81,7 +81,7 @@ namespace UrhoKosticky
 		{
 			Input.SubscribeToKeyDown(e => { if (e.Key == Key.Esc) Engine.Exit(); });
 						
-			Graphics.WindowTitle = "PF 2016";
+			Graphics.WindowTitle = "Happy New Year 2016";
 
 			nabijeni = new Timer (500);
 			nabijeni.Elapsed += delegate {
@@ -92,8 +92,8 @@ namespace UrhoKosticky
 			CreateScene();
 			SetupViewport();
 
-			initInstructionsText ("Ahoj"+Environment.NewLine+"Rozbi starou zed.");
-			initBoxesCountText ("Zbývá "+boxesNodesList.Count+" kostiček.");
+			initInstructionsText ("Hello!"+Environment.NewLine+"Destroy the old wall!");
+			initBoxesCountText (boxesNodesList.Count+" boxes left.");
 
 			initControls ();
 
@@ -491,7 +491,7 @@ namespace UrhoKosticky
 					item.GetComponent<StaticModel> ().SetMaterial(ResourceCache.GetMaterial (Assets.Materials.orange));
 				}
 			}
-			textboxesCount.Value =  ("Zbývá zbořit"+Environment.NewLine+count+" kostiček.");
+			textboxesCount.Value =  (Environment.NewLine+count+" boxes left.");
 
 			return returnBool;
 		}

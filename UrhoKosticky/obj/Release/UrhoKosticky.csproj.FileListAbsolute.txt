@@ -1,7 +1,5 @@
 C:\Users\Ondra\Documents\Projects\UrhoKosticky\UrhoKosticky\bin\Release\UrhoKosticky.dll
 C:\Users\Ondra\Documents\Projects\UrhoKosticky\UrhoKosticky\bin\Release\UrhoKosticky.pdb
-C:\Users\Ondra\Documents\Projects\UrhoKosticky\UrhoKosticky\bin\Release\com.ondrejmikulec.urhokosticky.apk
-C:\Users\Ondra\Documents\Projects\UrhoKosticky\UrhoKosticky\bin\Release\com.ondrejmikulec.urhokosticky-Signed.apk
 C:\Users\Ondra\Documents\Projects\UrhoKosticky\UrhoKosticky\bin\Release\Urho.dll
 C:\Users\Ondra\Documents\Projects\UrhoKosticky\UrhoKosticky\bin\Release\Urho.Droid.dll
 C:\Users\Ondra\Documents\Projects\UrhoKosticky\UrhoKosticky\bin\Release\Urho.Droid.SdlBindings.dll
@@ -13,7 +11,6 @@ C:\Users\Ondra\Documents\Projects\UrhoKosticky\UrhoKosticky\bin\Release\Urho.Dro
 C:\Users\Ondra\Documents\Projects\UrhoKosticky\UrhoKosticky\bin\Release\Urho.Droid.SdlBindings.xml
 C:\Users\Ondra\Documents\Projects\UrhoKosticky\UrhoKosticky\obj\Release\UrhoKosticky.dll
 C:\Users\Ondra\Documents\Projects\UrhoKosticky\UrhoKosticky\obj\Release\UrhoKosticky.pdb
-C:\Users\Ondra\Documents\Projects\UrhoKosticky\UrhoKosticky\obj\Release\android\bin\com.ondrejmikulec.urhokosticky.apk
 C:\Users\Ondra\Documents\Projects\UrhoKosticky\UrhoKosticky\obj\Release\res\layout\main.xml
 C:\Users\Ondra\Documents\Projects\UrhoKosticky\UrhoKosticky\obj\Release\res\values\strings.xml
 C:\Users\Ondra\Documents\Projects\UrhoKosticky\UrhoKosticky\obj\Release\res\mipmap-hdpi\icon.png
@@ -23,3 +20,8 @@ C:\Users\Ondra\Documents\Projects\UrhoKosticky\UrhoKosticky\obj\Release\res\mipm
 C:\Users\Ondra\Documents\Projects\UrhoKosticky\UrhoKosticky\obj\Release\res\mipmap-xxxhdpi\icon.png
 C:\Users\Ondra\Documents\Projects\UrhoKosticky\UrhoKosticky\obj\Release\R.cs.flag
 C:\Users\Ondra\Documents\Projects\UrhoKosticky\UrhoKosticky\obj\Release\uploadflags.txt
+C:\Users\Ondra\Documents\Projects\UrhoKosticky\UrhoKosticky\obj\Release\UrhoKosticky.csprojResolveAssemblyReference.cache
+C:\Users\Ondra\Documents\Projects\UrhoKosticky\UrhoKosticky\bin\Release\com.ondrejmikulec.hny2016game.apk
+C:\Users\Ondra\Documents\Projects\UrhoKosticky\UrhoKosticky\bin\Release\com.ondrejmikulec.hny2016game-Signed.apk
+C:\Users\Ondra\Documents\Projects\UrhoKosticky\UrhoKosticky\obj\Release\android\bin\com.ondrejmikulec.hny2016game.apk
+C:\Users\Ondra\Documents\Projects\UrhoKosticky\UrhoKosticky\obj\Release\res\layout\about.xml

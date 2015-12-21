@@ -6,6 +6,10 @@ UrhoKosticky.KostickyActivity, UrhoKosticky;md5dbfe1559451785d39bbd8ed8a54a32be.
 UrhoKosticky.KostickyActivity, UrhoKosticky, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null;md5dbfe1559451785d39bbd8ed8a54a32be.KostickyActivity
 UrhoKosticky.KostickyActivity;md5dbfe1559451785d39bbd8ed8a54a32be.KostickyActivity
 urhokosticky.KostickyActivity;md5dbfe1559451785d39bbd8ed8a54a32be.KostickyActivity
+UrhoKosticky.About, UrhoKosticky;md5dbfe1559451785d39bbd8ed8a54a32be.About
+UrhoKosticky.About, UrhoKosticky, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null;md5dbfe1559451785d39bbd8ed8a54a32be.About
+UrhoKosticky.About;md5dbfe1559451785d39bbd8ed8a54a32be.About
+urhokosticky.About;md5dbfe1559451785d39bbd8ed8a54a32be.About
 Android.Support.V4.App.FragmentManager/IOnBackStackChangedListenerImplementor, Xamarin.Android.Support.v13;mono.android.support.v4.app.FragmentManager_OnBackStackChangedListenerImplementor
 Android.Support.V4.App.FragmentManager+IOnBackStackChangedListenerImplementor, Xamarin.Android.Support.v13, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null;mono.android.support.v4.app.FragmentManager_OnBackStackChangedListenerImplementor
 Android.Support.V4.App.FragmentManager.IOnBackStackChangedListenerImplementor;mono.android.support.v4.app.FragmentManager_OnBackStackChangedListenerImplementor

@@ -853,6 +853,18 @@ namespace UrhoKosticky
 			// aapt resource value: 0x7f0a0016
 			public const int beginning = 2131361814;
 			
+			// aapt resource value: 0x7f0a003f
+			public const int buttonAbout = 2131361855;
+			
+			// aapt resource value: 0x7f0a003c
+			public const int buttonBack = 2131361852;
+			
+			// aapt resource value: 0x7f0a0040
+			public const int buttonQuit = 2131361856;
+			
+			// aapt resource value: 0x7f0a003e
+			public const int buttonStart = 2131361854;
+			
 			// aapt resource value: 0x7f0a002d
 			public const int checkbox = 2131361837;
 			
@@ -906,9 +918,6 @@ namespace UrhoKosticky
 			
 			// aapt resource value: 0x7f0a0018
 			public const int middle = 2131361816;
-			
-			// aapt resource value: 0x7f0a003c
-			public const int myButton = 2131361852;
 			
 			// aapt resource value: 0x7f0a0012
 			public const int never = 2131361810;
@@ -978,6 +987,9 @@ namespace UrhoKosticky
 			
 			// aapt resource value: 0x7f0a0008
 			public const int tabMode = 2131361800;
+			
+			// aapt resource value: 0x7f0a003d
+			public const int textView1 = 2131361853;
 			
 			// aapt resource value: 0x7f0a002b
 			public const int title = 2131361835;
@@ -1096,10 +1108,13 @@ namespace UrhoKosticky
 			public const int abc_simple_decor = 2130968599;
 			
 			// aapt resource value: 0x7f040018
-			public const int Main = 2130968600;
+			public const int About = 2130968600;
 			
 			// aapt resource value: 0x7f040019
-			public const int support_simple_spinner_dropdown_item = 2130968601;
+			public const int Main = 2130968601;
+			
+			// aapt resource value: 0x7f04001a
+			public const int support_simple_spinner_dropdown_item = 2130968602;
 			
 			static Layout()
 			{
