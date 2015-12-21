@@ -33,8 +33,10 @@ namespace UrhoKosticky
 			return returnMat;
 		}
 
-		Scene scene;
-		Node CameraNode;
+		Scene myScene;
+		Node myCameraNode;
+		Skybox mySkybox;
+		Light myLight;
 
 		float Yaw { get; set; }
 		float Pitch { get; set; }
@@ -114,16 +116,18 @@ namespace UrhoKosticky
 				}  else if (gameStateNow == 100) {
 					endCleanGarbageAction ();
 
-				} else if (gameStateNow > 100 && gameStateNow < 200 ){
+				} else if (gameStateNow > 100 && gameStateNow < 350 ){
+					cameraMoving = true;
 					moveCameraToFinal (cameraStartPosition,0,0);
 
-				}  else if (gameStateNow == 200){
+				}  else if (gameStateNow == 350){
 					endCleanGarbageAction ();
 					removeCollision (boxesNodesList);
 					boxesNodesList.Clear ();
 					removeCollision (ballNodesList);
 					ballNodesList.Clear ();
 					gameStatesForNewBoxes = buildListOfGameStates(gameStateNow+1, 10, 15*8) ;
+					changeSkyBox ();
 
 				} else if (gameStatesForNewBoxes!=null && gameStateNow >= gameStatesForNewBoxes[0] && gameStateNow <= gameStatesForNewBoxes[gameStatesForNewBoxes.Count-1]){
 					if (gameStatesForNewBoxes.Contains (gameStateNow)) {
@@ -156,7 +160,8 @@ namespace UrhoKosticky
 					colorBoxesBySchema (BoxColorSchemas.boxes6 (5,2),matRandomizer());
 
 				} else if (gameStateNow==gameStateTemp+500) {
-					resetVariablesToStart ();
+
+					setFinalLights ();
 
 				} 
 
@@ -166,6 +171,7 @@ namespace UrhoKosticky
 			if (destroyCheckOn == true && boxesDestroyStateCheck ()) {
 				idle = false;
 				destroyCheckOn = false;
+				textboxesCount.Value =  null;
 			}
 
 		}
@@ -224,13 +230,13 @@ namespace UrhoKosticky
 			Pitch += mouseSensitivity * mouseMove.Y;
 			Pitch = MathHelper.Clamp(Pitch, -90, 90);
 
-			CameraNode.Rotation = new Quaternion(Pitch, Yaw, 0);
+			myCameraNode.Rotation = new Quaternion(Pitch, Yaw, 0);
 
 
-			if (Input.GetKeyDown (Key.W)) CameraNode.Translate ( Vector3.UnitZ * moveSpeed * timeStep);
-			if (Input.GetKeyDown (Key.S)) CameraNode.Translate (-Vector3.UnitZ * moveSpeed * timeStep);
-			if (Input.GetKeyDown (Key.A)) CameraNode.Translate (-Vector3.UnitX * moveSpeed * timeStep);
-			if (Input.GetKeyDown (Key.D)) CameraNode.Translate ( Vector3.UnitX * moveSpeed * timeStep);
+			if (Input.GetKeyDown (Key.W)) myCameraNode.Translate ( Vector3.UnitZ * moveSpeed * timeStep);
+			if (Input.GetKeyDown (Key.S)) myCameraNode.Translate (-Vector3.UnitZ * moveSpeed * timeStep);
+			if (Input.GetKeyDown (Key.A)) myCameraNode.Translate (-Vector3.UnitX * moveSpeed * timeStep);
+			if (Input.GetKeyDown (Key.D)) myCameraNode.Translate ( Vector3.UnitX * moveSpeed * timeStep);
 			if (Input.GetKeyPress (Key.Space)||Input.GetKeyPress (Key.M)) {
 				textInstrukce.Value = "";
 				if (nabito) {
@@ -260,7 +266,7 @@ namespace UrhoKosticky
 				return;
 			}
 
-			if (!TouchEnabled || CameraNode == null)
+			if (!TouchEnabled || myCameraNode == null)
 				return;
 
 			if (UI.FocusElement != null)
@@ -276,14 +282,14 @@ namespace UrhoKosticky
 
 				if (state.Delta.X != 0 || state.Delta.Y != 0)
 				{
-					var camera = CameraNode.GetComponent<Camera>();
+					var camera = myCameraNode.GetComponent<Camera>();
 					if (camera == null)
 						return;
 
 					var graphics = Graphics;
 					Yaw += TouchSensitivity * camera.Fov / graphics.Height * state.Delta.X;
 					Pitch += TouchSensitivity * camera.Fov / graphics.Height * state.Delta.Y;
-					CameraNode.Rotation = new Quaternion(Pitch, Yaw, 0);
+					myCameraNode.Rotation = new Quaternion(Pitch, Yaw, 0);
 
 				}
 
@@ -320,36 +326,37 @@ namespace UrhoKosticky
 		void SetupViewport()
 		{
 			var renderer = Renderer;
-			renderer.SetViewport(0, new Viewport(Context, scene, CameraNode.GetComponent<Camera>(), null));
+			renderer.SetViewport(0, new Viewport(Context, myScene, myCameraNode.GetComponent<Camera>(), null));
 		}
 
 		void CreateScene()
 		{
-			scene = new Scene();
+			myScene = new Scene();
 
-			scene.CreateComponent<Octree>();
-			scene.CreateComponent<PhysicsWorld>();
-			scene.CreateComponent<DebugRenderer>();
+			myScene.CreateComponent<Octree>();
+			myScene.CreateComponent<PhysicsWorld>();
+			myScene.CreateComponent<DebugRenderer>();
 
-			Node zoneNode = scene.CreateChild("Zone");
+			Node zoneNode = myScene.CreateChild("Zone");
 			Zone zone = zoneNode.CreateComponent<Zone>();
 			zone.SetBoundingBox(new BoundingBox(-500.0f, 500.0f));
 
-			Node lightNode = scene.CreateChild("DirectionalLight");
+			Node lightNode = myScene.CreateChild("DirectionalLight");
 			lightNode.SetDirection(new Vector3(0.6f, -1.0f, 0.8f));
-			Light light = lightNode.CreateComponent<Light>();
-			light.LightType=LightType.Directional;
-			light.CastShadows=true;
-			light.ShadowBias=new BiasParameters(0.00025f, 0.5f);
-			light.ShadowCascade=new CascadeParameters(10.0f, 50.0f, 200.0f, 0.0f, 0.8f);
+			myLight = lightNode.CreateComponent<Light>();
+			myLight.LightType=LightType.Directional;
+			myLight.CastShadows=true;
+			myLight.ShadowBias=new BiasParameters(0.00025f, 0.5f);
+			myLight.ShadowCascade=new CascadeParameters(10.0f, 50.0f, 200.0f, 0.0f, 0.8f);
 
-			Node skyNode = scene.CreateChild("Sky");
+
+			Node skyNode = myScene.CreateChild("Sky");
 			skyNode.SetScale(500.0f); // The scale actually does not matter
-			Skybox skybox = skyNode.CreateComponent<Skybox>();
-			skybox.Model=ResourceCache.GetModel(Assets.Models.box);
-			skybox.SetMaterial(ResourceCache.GetMaterial("Materials/SkyboxSunSet.xml"));
+			mySkybox = skyNode.CreateComponent<Skybox>();
+			mySkybox.Model=ResourceCache.GetModel(Assets.Models.box);
+			mySkybox.SetMaterial(ResourceCache.GetMaterial(Assets.Materials.skyBoxSunSet));
 
-			Node floorNode = scene.CreateChild("Floor");
+			Node floorNode = myScene.CreateChild("Floor");
 			floorNode.Position=new Vector3(0.0f, -0.5f, 0.0f);
 			floorNode.Scale=new Vector3(500.0f, 1.0f, 500.0f);
 			StaticModel floorObject = floorNode.CreateComponent<StaticModel>();
@@ -370,17 +377,17 @@ namespace UrhoKosticky
 			colorBoxesBySchema (BoxColorSchemas.boxes1 (3, 2), matRandomizer());
 			colorBoxesBySchema (BoxColorSchemas.boxes5 (5, 2), matRandomizer());
 
-			CameraNode = new Node();
-			Camera oCamera = CameraNode.CreateComponent<Camera>();
+			myCameraNode = new Node();
+			Camera oCamera = myCameraNode.CreateComponent<Camera>();
 			oCamera.FarClip = 500.0f;
 
-			CameraNode.Position = cameraStartPosition;
+			myCameraNode.Position = cameraStartPosition;
 
 		}
 
 		public void createBoxAndAddToList(Vector3 position)
 		{
-			Node boxNode = scene.CreateChild("Box");
+			Node boxNode = myScene.CreateChild("Box");
 			boxNode.Position = position;
 			StaticModel boxObject = boxNode.CreateComponent<StaticModel>();
 			boxObject.Model=ResourceCache.GetModel(Assets.Models.box);
@@ -414,9 +421,9 @@ namespace UrhoKosticky
 		void SpawnObject(bool mega)
 		{
 
-			var boxNode = scene.CreateChild("SmallBox");
-			boxNode.Position = CameraNode.Position;
-			boxNode.Rotation = CameraNode.Rotation;
+			var boxNode = myScene.CreateChild("SmallBox");
+			boxNode.Position = myCameraNode.Position;
+			boxNode.Rotation = myCameraNode.Rotation;
 
 			if (mega) {
 				if (KostickyActivity.oVibrator!=null) {	KostickyActivity.oVibrator.Vibrate (KostickyActivity.vibrateBig);}
@@ -447,7 +454,7 @@ namespace UrhoKosticky
 
 			const float objectVelocity = 40.0f;
 
-			body.SetLinearVelocity(CameraNode.Rotation * new Vector3(0f, 0.25f, 1f) * objectVelocity);
+			body.SetLinearVelocity(myCameraNode.Rotation * new Vector3(0f, 0.25f, 1f) * objectVelocity);
 
 			ballNodesList.Add (boxNode);
 		}
@@ -536,19 +543,19 @@ namespace UrhoKosticky
 
 		void moveCameraToFinal(Vector3 targetPosition,float targetPitch, float targetYaw)
 		{
-			cameraMoving = true;
+			
 
 			if (!pitchedInPosition) {
 				if (!getPitchedteSteps) {
 					getPitchedteSteps = true;
 
-					stepPitch = ( targetPitch - CameraNode.Rotation.PitchAngle )/10; 
+					stepPitch = ( targetPitch - myCameraNode.Rotation.PitchAngle )/10; 
 				}
 
-				if (Math.Round(CameraNode.Rotation.PitchAngle,1)!=Math.Round(targetPitch,1)	) {
+				if (Math.Round(myCameraNode.Rotation.PitchAngle,1)!=Math.Round(targetPitch,1)	) {
 					Pitch += stepPitch;
 
-					CameraNode.Rotation = new Quaternion (Pitch,0,0);
+					myCameraNode.Rotation = new Quaternion (Pitch,0,0);
 
 				} else {
 					pitchedInPosition = true;
@@ -559,47 +566,47 @@ namespace UrhoKosticky
 				if (!getYawedteSteps) {
 					getYawedteSteps = true;
 
-					stepYaw = ( CameraNode.Rotation.YawAngle -targetYaw)/10; 
+					stepYaw = ( myCameraNode.Rotation.YawAngle -targetYaw)/10; 
 
 				}
 
-				if (	Math.Round(CameraNode.Rotation.YawAngle,1)!=Math.Round(targetYaw,1)	) {
+				if (	Math.Round(myCameraNode.Rotation.YawAngle,1)!=Math.Round(targetYaw,1)	) {
 					Yaw += stepYaw;
 
-					CameraNode.Rotation = new Quaternion (0,Yaw,0);
+					myCameraNode.Rotation = new Quaternion (0,Yaw,0);
 
 				} else {
 					yawedInPosition = true;
 				}				
 			}
 
-			if (yawedInPosition&&!movedInPosition) {
+			if (pitchedInPosition&&yawedInPosition&&!movedInPosition) {
 				if (!getMoveSteps) {
 					getMoveSteps = true;
-					stepX = ( targetPosition.X - CameraNode.Position.X)/100; 
-					stepY = ( targetPosition.Y - CameraNode.Position.Y)/100; 
-					stepZ = ( targetPosition.Z - CameraNode.Position.Z)/100; 
+					stepX = ( targetPosition.X - myCameraNode.Position.X)/100; 
+					stepY = ( targetPosition.Y - myCameraNode.Position.Y)/100; 
+					stepZ = ( targetPosition.Z - myCameraNode.Position.Z)/100; 
 
 				}
 
-				if (	Math.Round(targetPosition.X,1)!=Math.Round( CameraNode.Position.X,1)
-					|| 	Math.Round(targetPosition.Y,1)!=Math.Round( CameraNode.Position.Y,1)
-					|| 	Math.Round(targetPosition.Z,1)!=Math.Round( CameraNode.Position.Z,1)
+				if (	Math.Round(targetPosition.X,1)!=Math.Round( myCameraNode.Position.X,1)
+					|| 	Math.Round(targetPosition.Y,1)!=Math.Round( myCameraNode.Position.Y,1)
+					|| 	Math.Round(targetPosition.Z,1)!=Math.Round( myCameraNode.Position.Z,1)
 				) {
 
-				float cameraPositionX = CameraNode.Position.X + stepX;
-					float cameraPositionY = CameraNode.Position.Y + stepY;
-					float cameraPositionZ = CameraNode.Position.Z + stepZ;
+				float cameraPositionX = myCameraNode.Position.X + stepX;
+					float cameraPositionY = myCameraNode.Position.Y + stepY;
+					float cameraPositionZ = myCameraNode.Position.Z + stepZ;
 
-				CameraNode.Position = new Vector3(cameraPositionX,cameraPositionY,cameraPositionZ);
+				myCameraNode.Position = new Vector3(cameraPositionX,cameraPositionY,cameraPositionZ);
 				} else {
 					movedInPosition = true;
 				}			
 			}
 
-			if (	movedInPosition == true
-				&& 	yawedInPosition == true
-				&& 	pitchedInPosition == true) {
+			if (	movedInPosition
+				&& 	yawedInPosition
+				&& 	pitchedInPosition) {
 				idle = false;
 				cameraMoving = false;
 			}
@@ -642,6 +649,51 @@ namespace UrhoKosticky
 			foreach (Node item in nodesList) {
 				item.Rotation = new Quaternion (0f, 0f, 0f);
 			}
+		}
+
+		void changeSkyBox()
+		{
+			mySkybox.SetMaterial(ResourceCache.GetMaterial(Assets.Materials.skyBoxFullMoon));
+		}
+
+		void setFinalLights()
+		{
+			myLight.Enabled = false;
+
+			Node lightNode = myScene.CreateChild("PointLight");
+			Light light = lightNode.CreateComponent<Light>();
+			light.LightType = LightType.Point;
+			light.Range = (10.0f);
+
+			ObjectAnimation lightAnimation=new ObjectAnimation();
+
+
+			ValueAnimation positionAnimation=new ValueAnimation();
+			positionAnimation.InterpolationMethod= InterpMethod.Spline;
+			positionAnimation.SplineTension=0.7f;
+
+			positionAnimation.SetKeyFrame(0.0f, new Vector3(-5.0f, 5.0f, -3.0f));
+			positionAnimation.SetKeyFrame(1.0f, new Vector3(5.0f, 5.0f, -3.0f));
+			positionAnimation.SetKeyFrame(2.0f, new Vector3(5.0f, 5.0f, -2.0f));
+			positionAnimation.SetKeyFrame(3.0f, new Vector3(-5.0f, 5.0f, -2.0f));
+			positionAnimation.SetKeyFrame(4.0f, new Vector3(-5.0f, 5.0f, -3.0f));
+
+			lightAnimation.AddAttributeAnimation("Position", positionAnimation, WrapMode.Loop, 1f);
+
+			ValueAnimation colorAnimation=new ValueAnimation();
+			colorAnimation.SetKeyFrame(0.0f, Color.White);
+			colorAnimation.SetKeyFrame(1.0f, Color.Red);
+			colorAnimation.SetKeyFrame(2.0f, Color.Yellow);
+			colorAnimation.SetKeyFrame(3.0f, Color.Green);
+			colorAnimation.SetKeyFrame(4.0f, Color.Blue);
+
+			colorAnimation.SetKeyFrame(5.0f, Color.Magenta);
+			colorAnimation.SetKeyFrame(6.0f, Color.Cyan);
+			colorAnimation.SetKeyFrame(7.0f, Color.Red);
+			colorAnimation.SetKeyFrame(8.0f, Color.White);
+
+			lightAnimation.AddAttributeAnimation("@Light/Color", colorAnimation, WrapMode.Loop, 1f);
+			lightNode.ObjectAnimation=lightAnimation;
 		}
 
 	}

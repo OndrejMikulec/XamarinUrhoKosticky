@@ -12,9 +12,12 @@ namespace UrhoKosticky
 			public const string green = "Materials/M_0060_GrassGreen.xml";
 			public const string blue = "Materials/M_0103_Blue.xml";
 			public const string orange = "Materials/M_0039_DarkOrange.xml";
+
 			public const string stone = "Materials/StoneEnvMapSmall.xml";
-			public const string skyBox = "Materials/Skybox.xml";
 			public const string terrain = "Materials/Terrain.xml";
+
+			public const string skyBoxSunSet = "Materials/SkyboxSunSet.xml";
+			public const string skyBoxFullMoon = "Materials/SkyboxFullMoon.xml";
 		}
 
 		public static class Models
@@ -34,7 +37,7 @@ namespace UrhoKosticky
 		{
 			public const string myJoystick = "UI/ScreenJoystickMy.xml";
 			public const string defaultStyle = "UI/DefaultStyle.xml";
-			public const string myJoystickNoMega = "UI/ScreenJoystickMy.xml";
+			public const string myJoystickNoMega = "UI/ScreenJoystickMyNoMega.xml";
 		}
 
 
