@@ -1,4 +1,30 @@
-﻿using System;
+﻿/*
+The MIT License (MIT)
+
+Copyright (c) 2015 Ondrej Mikulec
+o.mikulec@seznam.cz
+Vsetin, Czech Republic
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+	The above copyright notice and this permission notice shall be included in all
+	copies or substantial portions of the Software.
+
+	THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+	IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+	FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+	AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+	LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+	OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+	SOFTWARE.
+*/
+
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -46,8 +72,9 @@ namespace UrhoKosticky
 		const float TouchSensitivity = 2.5f;
 		const float PixelSize = 0.01f;
 
-		Text screenText;
-		Text textboxesCount;
+		Text instructionText;
+		Text boxesCountText;
+		Text happyText;
 
 		List<Node> boxesNodesList = new List<Node> ();
 		List<Node> ballNodesList = new List<Node> ();
@@ -80,7 +107,7 @@ namespace UrhoKosticky
 		{
 			Input.SubscribeToKeyDown(e => { if (e.Key == Key.Esc) Engine.Exit(); });
 						
-			Graphics.WindowTitle = "Happy New Year 2016";
+			Graphics.WindowTitle = "Happy New Year 2016!";
 
 			base.Start();
 			CreateScene();
@@ -160,7 +187,7 @@ namespace UrhoKosticky
 				} else if (gameStateNow==gameStateTemp+500) {
 
 					setFinalLights ();
-
+					initHappyText ();
 				} 
 
 			}
@@ -169,7 +196,7 @@ namespace UrhoKosticky
 			if (destroyCheckOn == true && boxesDestroyStateCheck ()) {
 				idle = false;
 				destroyCheckOn = false;
-				textboxesCount.Value =  null;
+				boxesCountText.Value =  null;
 			}
 
 		}
@@ -250,7 +277,7 @@ namespace UrhoKosticky
 			if (Input.GetKeyDown (Key.H)) myCameraNode.Translate ( Vector3.UnitX * moveSpeed * timeStep);
 
 			if (Input.GetKeyPress (Key.Space)||Input.GetKeyPress (Key.M)) {
-				screenText.Value = "";
+				instructionText.Value = "";
 
 				if (Input.GetKeyPress (Key.M)) {
 					SpawnObject (true);
@@ -259,8 +286,8 @@ namespace UrhoKosticky
 					SpawnObject (false);
 				}
 
-				if (screenText.Value != null) {
-					screenText.Value = null;
+				if (instructionText.Value != null) {
+					instructionText.Value = null;
 				}
 			}
 
@@ -311,28 +338,41 @@ namespace UrhoKosticky
 
 		void initInstructionsText(string text = "")
 		{
-			screenText = new Text()
+			instructionText = new Text()
 			{
 				Value = text,
 				HorizontalAlignment = HorizontalAlignment.Center,
 				VerticalAlignment = VerticalAlignment.Center
 			};
-			screenText.SetFont(ResourceCache.GetFont(Assets.Fonts.Font), 20);
-			screenText.SetColor(new Color(0f, 1f, 0f));
-			UI.Root.AddChild(screenText);
+			instructionText.SetFont(ResourceCache.GetFont(Assets.Fonts.Font), 20);
+			instructionText.SetColor(new Color(0f, 1f, 0f));
+			UI.Root.AddChild(instructionText);
 		}
 
 		void initBoxesCountText(string text = "")
 		{
-			textboxesCount = new Text() 
+			boxesCountText = new Text() 
 			{
 				Value = text,
 				HorizontalAlignment = HorizontalAlignment.Left,
 				VerticalAlignment = VerticalAlignment.Center
 			};
-			textboxesCount.SetFont(ResourceCache.GetFont(Assets.Fonts.Font), 20);
-			textboxesCount.SetColor(new Color(0f, 1f, 0f));
-			UI.Root.AddChild(textboxesCount);
+			boxesCountText.SetFont(ResourceCache.GetFont(Assets.Fonts.Font), 20);
+			boxesCountText.SetColor(new Color(0f, 1f, 0f));
+			UI.Root.AddChild(boxesCountText);
+		}
+
+		void initHappyText(string text = "Happy New Year 2016!")
+		{
+			happyText = new Text() 
+			{
+				Value = text,
+				HorizontalAlignment = HorizontalAlignment.Center,
+				VerticalAlignment = VerticalAlignment.Bottom
+			};
+			happyText.SetFont(ResourceCache.GetFont(Assets.Fonts.Font), 20);
+			happyText.SetColor(new Color(1f, 0f, 0f));
+			UI.Root.AddChild(happyText);
 		}
 
 		void SetupViewport()
@@ -503,7 +543,7 @@ namespace UrhoKosticky
 					item.GetComponent<StaticModel> ().SetMaterial(ResourceCache.GetMaterial (Assets.Materials.orange));
 				}
 			}
-			textboxesCount.Value =  (Environment.NewLine+count+" boxes left.");
+			boxesCountText.Value =  (Environment.NewLine+count+" boxes left.");
 
 			return returnBool;
 		}

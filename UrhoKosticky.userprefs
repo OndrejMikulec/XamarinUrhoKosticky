@@ -1,10 +1,13 @@
 ﻿<Properties StartupItem="UrhoKosticky\Happy New Year 2016.csproj">
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="Android.F5AZCY06E609" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="UrhoKosticky\KostickyActivity.cs">
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Release" PreferredExecutionTarget="Android.F5AZCY06E609" />
+  <MonoDevelop.Ide.Workbench>
     <Files>
-      <File FileName="UrhoKosticky\Kosticky.cs" Line="722" Column="19" />
-      <File FileName="UrhoKosticky\KostickyActivity.cs" Line="43" Column="4" />
-      <File FileName="UrhoKosticky\MainActivity.cs" Line="16" Column="17" />
+      <File FileName="UrhoKosticky\About.cs" Line="1" Column="1" />
+      <File FileName="UrhoKosticky\Assets.cs" Line="1" Column="1" />
+      <File FileName="UrhoKosticky\boxColorSchemas.cs" Line="1" Column="1" />
+      <File FileName="UrhoKosticky\Kosticky.cs" Line="1" Column="1" />
+      <File FileName="UrhoKosticky\KostickyActivity.cs" Line="1" Column="1" />
+      <File FileName="UrhoKosticky\MainActivity.cs" Line="28" Column="22" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
