@@ -13,16 +13,14 @@ namespace UrhoKosticky
 		ScreenOrientation = ScreenOrientation.Portrait*/)]
 	public class MainActivity : Activity
 	{
+		public static CheckBox checkVibration;
 
 		protected override void OnCreate (Bundle savedInstanceState)
 		{
 			base.OnCreate (savedInstanceState);
 
-			// Set our view from the "main" layout resource
 			SetContentView (Resource.Layout.Main);
 
-			// Get our button from the layout resource,
-			// and attach an event to it
 			Button button = FindViewById<Button> (Resource.Id.buttonStart);
 			button.Click += delegate {
 
@@ -37,6 +35,7 @@ namespace UrhoKosticky
 
 			};
 
+			checkVibration = FindViewById<CheckBox> (Resource.Id.checkBox1);
 
 			Button buttonQuit = FindViewById<Button> (Resource.Id.buttonQuit);
 			buttonQuit.Click += delegate {

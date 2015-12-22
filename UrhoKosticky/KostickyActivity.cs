@@ -23,8 +23,6 @@ namespace UrhoKosticky
 	public class KostickyActivity : Activity
 	{
 		public static Vibrator oVibrator;
-		public const int vibrateSmall = 20;
-		public const int vibrateBig = 50;
 
 		protected override void OnCreate (Bundle savedInstanceState)
 		{
@@ -38,7 +36,7 @@ namespace UrhoKosticky
 
 			try {
 				oVibrator = (Vibrator)this.GetSystemService (Android.Content.Context.VibratorService);
-			} catch  {	}
+			} catch  {}
 		}
 
 		protected override void OnResume()
@@ -76,6 +74,15 @@ namespace UrhoKosticky
 		{
 			UrhoSurface.OnWindowFocusChanged(hasFocus);
 			base.OnWindowFocusChanged(hasFocus);
+		}
+
+		public const int vibrateSmall = 20;
+		public const int vibrateBig = 50;
+		public static void vibrate(int time)
+		{
+			if (oVibrator!=null && oVibrator.HasVibrator && MainActivity.checkVibration.Checked) {
+				oVibrator.Vibrate (time);
+			}
 		}
 	}
 }

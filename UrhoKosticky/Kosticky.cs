@@ -100,6 +100,7 @@ namespace UrhoKosticky
 			base.OnUpdate(timeStep);
 			SimpleMoveCamera3D(timeStep);
 			MoveCameraByTouches(timeStep);
+			checkMinY ();
 
 			if (!idle) {
 				gameStateNow++;
@@ -141,19 +142,19 @@ namespace UrhoKosticky
 					setCollision (boxesNodesList);
 					seConstructionLight ();
 				} else if (gameStateNow==gameStateTemp+100) {
-					KostickyActivity.oVibrator.Vibrate (KostickyActivity.vibrateSmall);
+					KostickyActivity.vibrate (KostickyActivity.vibrateSmall);
 					colorBoxesBySchema (BoxColorSchemas.boxes2 (-5,2),matRandomizer());
 
 				}  else if (gameStateNow==gameStateTemp+200) {
-					KostickyActivity.oVibrator.Vibrate (KostickyActivity.vibrateSmall);
+					KostickyActivity.vibrate (KostickyActivity.vibrateSmall);
 					colorBoxesBySchema (BoxColorSchemas.boxes0 (-1,2),matRandomizer());
 
 				}  else if (gameStateNow==gameStateTemp+300) {
-					KostickyActivity.oVibrator.Vibrate (KostickyActivity.vibrateSmall);
+					KostickyActivity.vibrate (KostickyActivity.vibrateSmall);
 					colorBoxesBySchema (BoxColorSchemas.boxes1 (3,2),matRandomizer());
 
 				}  else if (gameStateNow==gameStateTemp+400) {
-					KostickyActivity.oVibrator.Vibrate (KostickyActivity.vibrateSmall);
+					KostickyActivity.vibrate (KostickyActivity.vibrateSmall);
 					colorBoxesBySchema (BoxColorSchemas.boxes6 (5,2),matRandomizer());
 
 				} else if (gameStateNow==gameStateTemp+500) {
@@ -437,10 +438,10 @@ namespace UrhoKosticky
 			boxNode.Rotation = myCameraNode.Rotation;
 
 			if (mega) {
-				if (KostickyActivity.oVibrator!=null) {	KostickyActivity.oVibrator.Vibrate (KostickyActivity.vibrateBig);}
+				KostickyActivity.vibrate (KostickyActivity.vibrateBig);
 				boxNode.SetScale(3);
 			} else {
-				if (KostickyActivity.oVibrator!=null) {	KostickyActivity.oVibrator.Vibrate (KostickyActivity.vibrateSmall);}
+				KostickyActivity.vibrate (KostickyActivity.vibrateSmall);
 				boxNode.SetScale(0.5f);
 			}
 
@@ -716,6 +717,14 @@ namespace UrhoKosticky
 
 			lightAnimation.AddAttributeAnimation("@Light/Color", colorAnimation, WrapMode.Loop, 1f);
 			lightNode.ObjectAnimation=lightAnimation;
+		}
+
+		float minY = 0.5f;
+		void checkMinY ()
+		{
+			if (myCameraNode.Position.Y < minY) {
+				myCameraNode.Position = new Vector3 (myCameraNode.Position.X,minY,myCameraNode.Position.Z);
+			}
 		}
 
 	}

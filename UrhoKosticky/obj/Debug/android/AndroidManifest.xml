@@ -12,7 +12,7 @@
         <category android:name="android.intent.category.LAUNCHER" />
       </intent-filter>
     </activity>
-    <activity android:configChanges="keyboardHidden|orientation" android:label="Happy New Year 2016" android:screenOrientation="landscape" android:name="md5dbfe1559451785d39bbd8ed8a54a32be.KostickyActivity" />
+    <activity android:configChanges="keyboardHidden|orientation" android:label="Happy New Year 2016" android:name="md5dbfe1559451785d39bbd8ed8a54a32be.KostickyActivity" />
     <activity android:label="About" android:name="md5dbfe1559451785d39bbd8ed8a54a32be.About" />
     <provider android:name="mono.MonoRuntimeProvider" android:exported="false" android:initOrder="2147483647" android:authorities="com.ondrejmikulec.hny2016game.mono.MonoRuntimeProvider.__mono_init__" />
     <!--suppress ExportedReceiver-->
