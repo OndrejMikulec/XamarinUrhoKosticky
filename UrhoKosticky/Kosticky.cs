@@ -504,7 +504,7 @@ namespace UrhoKosticky
 			var shape = boxNode.CreateComponent<CollisionShape>();
 			shape.SetBox(Vector3.One, Vector3.Zero, Quaternion.Identity);
 
-			const float objectVelocity = 40.0f;
+			const float objectVelocity = 50.0f;
 
 			body.SetLinearVelocity(myCameraNode.Rotation * new Vector3(0f, 0.25f, 1f) * objectVelocity);
 

@@ -11,7 +11,6 @@ C:\Users\Ondra\Documents\Projects\UrhoKosticky\UrhoKosticky\bin\Release\Xamarin.
 C:\Users\Ondra\Documents\Projects\UrhoKosticky\UrhoKosticky\bin\Release\Urho.xml
 C:\Users\Ondra\Documents\Projects\UrhoKosticky\UrhoKosticky\bin\Release\Urho.Droid.xml
 C:\Users\Ondra\Documents\Projects\UrhoKosticky\UrhoKosticky\bin\Release\Urho.Droid.SdlBindings.xml
-C:\Users\Ondra\Documents\Projects\UrhoKosticky\UrhoKosticky\obj\Release\Happy New Year 2016.csprojResolveAssemblyReference.cache
 C:\Users\Ondra\Documents\Projects\UrhoKosticky\UrhoKosticky\obj\Release\UrhoKosticky.dll
 C:\Users\Ondra\Documents\Projects\UrhoKosticky\UrhoKosticky\obj\Release\UrhoKosticky.pdb
 C:\Users\Ondra\Documents\Projects\UrhoKosticky\UrhoKosticky\obj\Release\android\bin\com.ondrejmikulec.hny2016game.apk

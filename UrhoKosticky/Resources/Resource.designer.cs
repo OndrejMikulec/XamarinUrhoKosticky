@@ -853,20 +853,20 @@ namespace UrhoKosticky
 			// aapt resource value: 0x7f0a0016
 			public const int beginning = 2131361814;
 			
-			// aapt resource value: 0x7f0a003f
-			public const int buttonAbout = 2131361855;
+			// aapt resource value: 0x7f0a0040
+			public const int buttonAbout = 2131361856;
 			
 			// aapt resource value: 0x7f0a003c
 			public const int buttonBack = 2131361852;
 			
-			// aapt resource value: 0x7f0a0043
-			public const int buttonQuit = 2131361859;
+			// aapt resource value: 0x7f0a0044
+			public const int buttonQuit = 2131361860;
 			
-			// aapt resource value: 0x7f0a003e
-			public const int buttonStart = 2131361854;
+			// aapt resource value: 0x7f0a003f
+			public const int buttonStart = 2131361855;
 			
-			// aapt resource value: 0x7f0a0040
-			public const int checkBox1 = 2131361856;
+			// aapt resource value: 0x7f0a0041
+			public const int checkBox1 = 2131361857;
 			
 			// aapt resource value: 0x7f0a002d
 			public const int checkbox = 2131361837;
@@ -913,11 +913,11 @@ namespace UrhoKosticky
 			// aapt resource value: 0x7f0a0027
 			public const int image = 2131361831;
 			
-			// aapt resource value: 0x7f0a0041
-			public const int linearLayout1 = 2131361857;
-			
 			// aapt resource value: 0x7f0a0042
-			public const int linearLayout2 = 2131361858;
+			public const int linearLayout1 = 2131361858;
+			
+			// aapt resource value: 0x7f0a0043
+			public const int linearLayout2 = 2131361859;
 			
 			// aapt resource value: 0x7f0a0006
 			public const int listMode = 2131361798;
@@ -945,6 +945,9 @@ namespace UrhoKosticky
 			
 			// aapt resource value: 0x7f0a002f
 			public const int radio = 2131361839;
+			
+			// aapt resource value: 0x7f0a003d
+			public const int scrollView1 = 2131361853;
 			
 			// aapt resource value: 0x7f0a0032
 			public const int search_badge = 2131361842;
@@ -997,8 +1000,8 @@ namespace UrhoKosticky
 			// aapt resource value: 0x7f0a0008
 			public const int tabMode = 2131361800;
 			
-			// aapt resource value: 0x7f0a003d
-			public const int textView1 = 2131361853;
+			// aapt resource value: 0x7f0a003e
+			public const int textView1 = 2131361854;
 			
 			// aapt resource value: 0x7f0a002b
 			public const int title = 2131361835;

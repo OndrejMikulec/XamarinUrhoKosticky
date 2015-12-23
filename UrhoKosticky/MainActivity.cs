@@ -41,6 +41,7 @@ namespace UrhoKosticky
 	{
 		public static CheckBox checkVibration;
 
+
 		protected override void OnCreate (Bundle savedInstanceState)
 		{
 			base.OnCreate (savedInstanceState);
