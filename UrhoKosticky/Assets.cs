@@ -50,14 +50,7 @@ namespace UrhoKosticky
 		{
 			public const string box = "Models/Box.mdl";
 			public const string sphere = "Models/Sphere.mdl";
-			public const string Player = "Models/Player.mdl";
-			public const string Enemy1 = "Models/Enemy1.mdl";
-			public const string Enemy2 = "Models/Enemy2.mdl";
-			public const string Enemy3 = "Models/Enemy3.mdl";
-			public const string Enemy3weapon = "Models/Enemy3weapon.mdl";
-			public const string Coin = "Models/Coin.mdl";
-			public const string SMWeapon = "Models/SMWeapon.mdl";
-		}
+
 
 		public static class UI
 		{
