@@ -1084,11 +1084,11 @@ containing a value of this type.
         public static int activity_chooser_view_content=0x7f0a0025;
         public static int always=0x7f0a000f;
         public static int beginning=0x7f0a0016;
-        public static int buttonAbout=0x7f0a003f;
+        public static int buttonAbout=0x7f0a0040;
         public static int buttonBack=0x7f0a003c;
-        public static int buttonQuit=0x7f0a0043;
-        public static int buttonStart=0x7f0a003e;
-        public static int checkBox1=0x7f0a0040;
+        public static int buttonQuit=0x7f0a0044;
+        public static int buttonStart=0x7f0a003f;
+        public static int checkBox1=0x7f0a0041;
         public static int checkbox=0x7f0a002d;
         public static int collapseActionView=0x7f0a0010;
         public static int default_activity_button=0x7f0a0028;
@@ -1104,8 +1104,8 @@ containing a value of this type.
         public static int icon=0x7f0a002a;
         public static int ifRoom=0x7f0a0011;
         public static int image=0x7f0a0027;
-        public static int linearLayout1=0x7f0a0041;
-        public static int linearLayout2=0x7f0a0042;
+        public static int linearLayout1=0x7f0a0042;
+        public static int linearLayout2=0x7f0a0043;
         public static int listMode=0x7f0a0006;
         public static int list_item=0x7f0a0029;
         public static int middle=0x7f0a0018;
@@ -1115,6 +1115,7 @@ containing a value of this type.
         public static int progress_circular=0x7f0a0004;
         public static int progress_horizontal=0x7f0a0005;
         public static int radio=0x7f0a002f;
+        public static int scrollView1=0x7f0a003d;
         public static int search_badge=0x7f0a0032;
         public static int search_bar=0x7f0a0031;
         public static int search_button=0x7f0a0033;
@@ -1132,7 +1133,7 @@ containing a value of this type.
         public static int split_action_bar=0x7f0a001e;
         public static int submit_area=0x7f0a0039;
         public static int tabMode=0x7f0a0008;
-        public static int textView1=0x7f0a003d;
+        public static int textView1=0x7f0a003e;
         public static int title=0x7f0a002b;
         public static int top_action_bar=0x7f0a0020;
         public static int up=0x7f0a0021;

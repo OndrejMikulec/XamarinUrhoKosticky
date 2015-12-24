@@ -27,14 +27,13 @@ furnished to do so, subject to the following conditions:
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
-using System.Linq.Expressions;
-using System.Timers;
+
 
 using Urho;
 using Urho.Resources;
 using Urho.Gui;
 using Urho.Physics;
+
 
 
 namespace UrhoKosticky
@@ -150,7 +149,7 @@ namespace UrhoKosticky
 					removeCollision (ballNodesList);
 					ballNodesList.Clear ();
 					gameStatesForNewBoxes = buildListOfGameStates(gameStateNow+1, 10, (15*8)/3) ;
-					instructionText.Value = "Wait for wall building.";
+					//instructionText.Value = "Wait for finish the wall.";
 
 				} else if (gameStatesForNewBoxes!=null && gameStateNow >= gameStatesForNewBoxes[0] && gameStateNow <= gameStatesForNewBoxes[gameStatesForNewBoxes.Count-1]){
 					if (gameStatesForNewBoxes.Contains (gameStateNow)) {
@@ -170,7 +169,7 @@ namespace UrhoKosticky
 					resetRotation (boxesNodesList);
 					buildNewWall ();
 					gameStateTemp = gameStateNow;
-					instructionText.Value = "";
+					//instructionText.Value = "";
 
 				} else if (gameStateNow==gameStateTemp+1) {
 					setCollision (boxesNodesList);
@@ -376,7 +375,7 @@ namespace UrhoKosticky
 			{
 				Value = text,
 				HorizontalAlignment = HorizontalAlignment.Center,
-				VerticalAlignment = VerticalAlignment.Bottom
+				VerticalAlignment = VerticalAlignment.Top
 			};
 			happyText.SetFont(ResourceCache.GetFont(Assets.Fonts.Font), 25);
 			happyText.SetColor(new Color(1f, 0f, 0f));

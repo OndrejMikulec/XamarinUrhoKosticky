@@ -21,7 +21,7 @@
             <attribute name="Horiz Alignment" value="Center" />
             <attribute name="Vert Alignment" value="Center" />
             <attribute name="Color" value="0 0 0 1" />
-            <attribute name="Text" value="Mega" />
+            <attribute name="Text" value="MEGA" />
         </element>
          <attribute name="Is Visible" value="true" />
     </element>
@@ -44,8 +44,7 @@
             <attribute name="Horiz Alignment" value="Center" />
             <attribute name="Vert Alignment" value="Center" />
             <attribute name="Color" value="0 0 0 1" />
-            <attribute name="Text" value="Fire" />
-            <attribute name="TextStyle" value="Bold" />
+            <attribute name="Text" value="FIRE" />
          </element>
     </element>
     <element type="Button">
