@@ -8,7 +8,7 @@
         <attribute name="Size" value="96 96" />
         <attribute name="Horiz Alignment" value="Right" />
         <attribute name="Vert Alignment" value="Bottom" />
-        <attribute name="Texture" value="Texture2D;Textures/TouchInput.png" />
+        <attribute name="Texture" value="Texture2D;Textures/TouchInputMy.png" />
         <attribute name="Image Rect" value="96 0 192 96" />
         <attribute name="Hover Image Offset" value="0 0" />
         <attribute name="Pressed Image Offset" value="0 0" />
@@ -31,7 +31,7 @@
         <attribute name="Size" value="96 96" />
         <attribute name="Horiz Alignment" value="Right" />
         <attribute name="Vert Alignment" value="Bottom" />
-        <attribute name="Texture" value="Texture2D;Textures/TouchInput.png" />
+        <attribute name="Texture" value="Texture2D;Textures/TouchInputMy.png" />
         <attribute name="Image Rect" value="96 0 192 96" />
         <attribute name="Hover Image Offset" value="0 0" />
         <attribute name="Pressed Image Offset" value="0 0" />
@@ -49,7 +49,7 @@
         <attribute name="Size" value="48 48" />
         <attribute name="Horiz Alignment" value="Right" />
         <attribute name="Opacity" value="0.5" />
-        <attribute name="Texture" value="Texture2D;Textures/TouchInput.png" />
+        <attribute name="Texture" value="Texture2D;Textures/TouchInputMy.png" />
         <attribute name="Image Rect" value="192 0 240 48" />
         <attribute name="Hover Image Offset" value="0 0" />
         <attribute name="Pressed Image Offset" value="0 0" />
@@ -64,7 +64,7 @@
         <attribute name="Position" value="12 -76" />
         <attribute name="Size" value="96 96" />
         <attribute name="Vert Alignment" value="Bottom" />
-        <attribute name="Texture" value="Texture2D;Textures/TouchInput.png" />
+        <attribute name="Texture" value="Texture2D;Textures/TouchInputMy.png" />
         <attribute name="Image Rect" value="0 0 96 96" />
         <attribute name="Hover Image Offset" value="0 0" />
         <attribute name="Pressed Image Offset" value="0 0" />

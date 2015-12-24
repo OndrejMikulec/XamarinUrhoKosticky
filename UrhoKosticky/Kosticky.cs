@@ -149,12 +149,18 @@ namespace UrhoKosticky
 					boxesNodesList.Clear ();
 					removeCollision (ballNodesList);
 					ballNodesList.Clear ();
-					gameStatesForNewBoxes = buildListOfGameStates(gameStateNow+1, 10, 15*8) ;
-
+					gameStatesForNewBoxes = buildListOfGameStates(gameStateNow+1, 10, (15*8)/3) ;
+					instructionText.Value = "Wait for wall building.";
 
 				} else if (gameStatesForNewBoxes!=null && gameStateNow >= gameStatesForNewBoxes[0] && gameStateNow <= gameStatesForNewBoxes[gameStatesForNewBoxes.Count-1]){
 					if (gameStatesForNewBoxes.Contains (gameStateNow)) {
 						createBoxAndAddToList (new Vector3 (0f, 50f, 0f));
+					}
+					if (gameStatesForNewBoxes.Contains (gameStateNow)) {
+						createBoxAndAddToList (new Vector3 (-5f, 50f, 0f));
+					}
+					if (gameStatesForNewBoxes.Contains (gameStateNow)) {
+						createBoxAndAddToList (new Vector3 (5f, 50f, 0f));
 					}
 
 					settingNight();
@@ -164,6 +170,7 @@ namespace UrhoKosticky
 					resetRotation (boxesNodesList);
 					buildNewWall ();
 					gameStateTemp = gameStateNow;
+					instructionText.Value = "";
 
 				} else if (gameStateNow==gameStateTemp+1) {
 					setCollision (boxesNodesList);
@@ -297,13 +304,11 @@ namespace UrhoKosticky
 		void MoveCameraByTouches (float timeStep)
 		{
 
-			if (!TouchEnabled) {
+			if (!TouchEnabled)
 				return;
-			}
 
-			if (cameraMoving) {
+			if (cameraMoving)
 				return;
-			}
 
 			if (!TouchEnabled || myCameraNode == null)
 				return;
@@ -311,28 +316,31 @@ namespace UrhoKosticky
 			if (UI.FocusElement != null)
 				return;
 
+			if (Input==null)
+				return;
+			
 
-			var input = Input;
-			for (uint i = 0, num = input.NumTouches; i < num; ++i)
-			{
-				TouchState state = input.GetTouch(i);
-				if (state.TouchedElement != null)
-					continue;
-
-				if (state.Delta.X != 0 || state.Delta.Y != 0)
+			try {
+				var input = Input;
+				for (uint i = 0, num = input.NumTouches; i < num; ++i)
 				{
-					var camera = myCameraNode.GetComponent<Camera>();
-					if (camera == null)
-						return;
+					TouchState state = input.GetTouch(i);///!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+					if (state.TouchedElement != null)///!!!!!!!!!!!!!!!!!!!!!!!!!!
+						continue;
 
-					var graphics = Graphics;
-					Yaw += TouchSensitivity * camera.Fov / graphics.Height * state.Delta.X;
-					Pitch += TouchSensitivity * camera.Fov / graphics.Height * state.Delta.Y;
-					myCameraNode.Rotation = new Quaternion(Pitch, Yaw, 0);
+					if (state.Delta.X != 0 || state.Delta.Y != 0)
+					{
+						var camera = myCameraNode.GetComponent<Camera>();
+						if (camera == null)
+							return;
 
+						var graphics = Graphics;
+						Yaw += TouchSensitivity * camera.Fov / graphics.Height * state.Delta.X;
+						Pitch += TouchSensitivity * camera.Fov / graphics.Height * state.Delta.Y;
+						myCameraNode.Rotation = new Quaternion(Pitch, Yaw, 0);
+					}
 				}
-
-			}
+			} catch {}
 		}
 
 
@@ -344,7 +352,7 @@ namespace UrhoKosticky
 				HorizontalAlignment = HorizontalAlignment.Center,
 				VerticalAlignment = VerticalAlignment.Center
 			};
-			instructionText.SetFont(ResourceCache.GetFont(Assets.Fonts.Font), 20);
+			instructionText.SetFont(ResourceCache.GetFont(Assets.Fonts.Font), 25);
 			instructionText.SetColor(new Color(0f, 1f, 0f));
 			UI.Root.AddChild(instructionText);
 		}
@@ -357,7 +365,7 @@ namespace UrhoKosticky
 				HorizontalAlignment = HorizontalAlignment.Left,
 				VerticalAlignment = VerticalAlignment.Center
 			};
-			boxesCountText.SetFont(ResourceCache.GetFont(Assets.Fonts.Font), 20);
+			boxesCountText.SetFont(ResourceCache.GetFont(Assets.Fonts.Font), 25);
 			boxesCountText.SetColor(new Color(0f, 1f, 0f));
 			UI.Root.AddChild(boxesCountText);
 		}
@@ -370,7 +378,7 @@ namespace UrhoKosticky
 				HorizontalAlignment = HorizontalAlignment.Center,
 				VerticalAlignment = VerticalAlignment.Bottom
 			};
-			happyText.SetFont(ResourceCache.GetFont(Assets.Fonts.Font), 20);
+			happyText.SetFont(ResourceCache.GetFont(Assets.Fonts.Font), 25);
 			happyText.SetColor(new Color(1f, 0f, 0f));
 			UI.Root.AddChild(happyText);
 		}
@@ -473,7 +481,7 @@ namespace UrhoKosticky
 		void SpawnObject(bool mega)
 		{
 
-			var boxNode = myScene.CreateChild("SmallBox");
+			var boxNode = myScene.CreateChild("SmallBox");///!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 			boxNode.Position = myCameraNode.Position;
 			boxNode.Rotation = myCameraNode.Rotation;
 
@@ -706,7 +714,7 @@ namespace UrhoKosticky
 
 		void settingNight()
 		{
-			myLightDay.Brightness -= 0.001f;
+			myLightDay.Brightness -= 0.003f;
 		}
 
 		Light lightConst;

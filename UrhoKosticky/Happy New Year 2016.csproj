@@ -153,5 +153,6 @@
     <AndroidAsset Include="Assets\Data\Textures\SunSetLeft1024.dds" />
     <AndroidAsset Include="Assets\Data\Textures\SunSetRight1024.dds" />
     <AndroidAsset Include="Assets\Data\Textures\SunSetUp1024.dds" />
+    <AndroidAsset Include="Assets\Data\Textures\TouchInputMy.png" />
   </ItemGroup>
 </Project>
