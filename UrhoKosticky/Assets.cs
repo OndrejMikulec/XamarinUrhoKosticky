@@ -50,7 +50,7 @@ namespace UrhoKosticky
 		{
 			public const string box = "Models/Box.mdl";
 			public const string sphere = "Models/Sphere.mdl";
-
+		}
 
 		public static class UI
 		{
